@@ -4,8 +4,11 @@ import { StockFormComponent } from '../stock-form/stock-form.component';
 
 @Component({
   selector: 'app-stock-modal-button',
-  templateUrl: './stock-modal-button.component.html',
-  styleUrls: ['./stock-modal-button.component.css']
+  template: `
+    <button mat-raised-button color="primary" (click)="openStockModal()">Add Stock Transaction</button>
+  `,
+  styles: [
+  ]
 })
 export class StockModalButtonComponent {
 

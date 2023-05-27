@@ -1,7 +1,7 @@
 <form [formGroup]="stockForm" (ngSubmit)="onFormSubmit()">
-  <h3 mat-dialog-title >Add Stock</h3>
+  <h3 mat-dialog-title>Add Stock</h3>
   <mat-dialog-content>
-    <mat-form-field [style.width.px]=400>
+    <mat-form-field [style.width.px]="formFieldWidth">
       <mat-label>Stock Name</mat-label>
       <mat-select formControlName="stockName">
         <mat-option>Enter the Stock Name</mat-option>
@@ -9,45 +9,72 @@
           {{ stock.name }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="stockForm.controls['stockName'].touched && stockForm.controls['stockName'].invalid">This field is Mandatory</mat-error>
+      <mat-error
+        *ngIf="
+          stockForm.controls['stockName'].touched &&
+          stockForm.controls['stockName'].invalid
+        "
+        >This field is Mandatory</mat-error
+      >
     </mat-form-field>
-    <br/>
-    <mat-form-field [style.width.px]=400>
+    <br />
+    <mat-form-field [style.width.px]="formFieldWidth">
       <mat-label>Investment Date</mat-label>
-      <input matInput formControlName="investmentDate" [max]="today" [matDatepicker]="picker">
+      <input
+        matInput
+        formControlName="investmentDate"
+        [max]="today"
+        [matDatepicker]="picker"
+      />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="stockForm.controls['investmentDate'].touched && stockForm.controls['investmentDate'].invalid">This field is Mandatory</mat-error>
+      <mat-error
+        *ngIf="
+          stockForm.controls['investmentDate'].touched &&
+          stockForm.controls['investmentDate'].invalid
+        "
+        >This field is Mandatory</mat-error
+      >
     </mat-form-field>
-    <br/>
-    <mat-form-field [style.width.px]=400>
+    <br />
+    <mat-form-field [style.width.px]="formFieldWidth">
       <mat-label>Quantity</mat-label>
-      <input matInput placeholder="Enter Number of Stocks Bought" formControlName="quantity">
+      <input
+        matInput
+        placeholder="Enter Number of Stocks Bought"
+        formControlName="quantity"
+      />
       <mat-error *ngIf="stockForm.controls['quantity'].errors?.['required']">
         This field is Mandatory
       </mat-error>
       <mat-error *ngIf="stockForm.controls['quantity'].errors?.['min']">
-        Buy Quantity should be atleast {{stockForm.controls['quantity'].errors?.['min'].min }}
+        Buy Quantity should be atleast
+        {{stockForm.controls['quantity'].errors?.['min'].min }}
       </mat-error>
       <mat-error *ngIf="stockForm.controls['quantity'].errors?.['pattern']">
         Please enter a valid number
       </mat-error>
     </mat-form-field>
-    <br/>
-    <mat-form-field [style.width.px]=400>
+    <br />
+    <mat-form-field [style.width.px]="formFieldWidth">
       <mat-label>Buy Price</mat-label>
-      <input matInput placeholder="Enter Buy Price" formControlName="buyPrice">
+      <input
+        matInput
+        placeholder="Enter Buy Price"
+        formControlName="buyPrice"
+      />
       <mat-error *ngIf="stockForm.controls['buyPrice'].errors?.['required']">
         This field is Mandatory
       </mat-error>
       <mat-error *ngIf="stockForm.controls['buyPrice'].errors?.['min']">
-        Buy Price should be atleast {{stockForm.controls['buyPrice'].errors?.['min'].min }}
+        Buy Price should be atleast
+        {{stockForm.controls['buyPrice'].errors?.['min'].min }}
       </mat-error>
       <mat-error *ngIf="stockForm.controls['buyPrice'].errors?.['pattern']">
         Please enter a valid number
       </mat-error>
     </mat-form-field>
-      <!-- <div class="form-group">
+    <!-- <div class="form-group">
       <label for="stock-name">Stock Name</label>
       <select class="form-control" formControlName="stockName" id="stock-name">
           <option value="" selected>Enter the Stock Name</option>
@@ -102,9 +129,16 @@
       </div>
     </div>
     <button [disabled]="stockForm.invalid">Submit</button> -->
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close color="accent">Close</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary">Submit</button>
-</mat-dialog-actions>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="accent">Close</button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      color="primary"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
 </form>

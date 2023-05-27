@@ -24,6 +24,7 @@ import { DividendFormComponent } from './components/dividend-form/dividend-form.
 import { DataTransferService } from './services/data-transfer.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StockModalButtonComponent } from './components/stock-modal-button/stock-modal-button.component';
+import { MutualModalButtonComponent } from './components/mutual-modal-button/mutual-modal-button.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { StockModalButtonComponent } from './components/stock-modal-button/stock
     DividendFormComponent,
     ProfitLossFormComponent,
     FundFormComponent,
-    StockModalButtonComponent
+    StockModalButtonComponent,
+    MutualModalButtonComponent
   ],
   imports: [
     BrowserModule,
