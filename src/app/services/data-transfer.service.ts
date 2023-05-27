@@ -7,6 +7,10 @@ import {
 import { environment } from '../environments/environment';
 import { Stock } from '../models/stock.model';
 import { Observable, map } from 'rxjs';
+import { MutualFund } from '../models/mutualFund.model';
+import { Fund } from '../models/fund.model';
+import { ProfitLoss } from '../models/profit-loss.model';
+import { Dividend } from '../models/dividend.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +26,40 @@ export class DataTransferService {
     return this.http.post<Stock>(this.apiUrl+'stocks/', stock, {headers:this.headers});
   }
 
+  addMutualFund(mutualFund:MutualFund):Observable<MutualFund>{
+    return this.http.post<MutualFund>(this.apiUrl+'mutual-funds/',mutualFund,{headers:this.headers});
+  }
+
+  addFund(fund:Fund):Observable<Fund>{
+    return this.http.post<Fund>(this.apiUrl+'funds/', fund, {headers:this.headers});
+  }
+
+  addProfitLoss(profitLoss:ProfitLoss):Observable<ProfitLoss>{
+    return this.http.post<ProfitLoss>(this.apiUrl+'profit-losses/', profitLoss, {headers:this.headers});
+  }
+
+  addDividend(dividend:Dividend):Observable<Dividend>{
+    return this.http.post<Dividend>(this.apiUrl+'dividends/', dividend, {headers:this.headers});
+  }
+
   getStocks():Observable<Stock[]>{
     return this.http.get<Stock[]>(this.apiUrl+'stocks/', {headers:this.headers});
+  }
+
+  getMutualFunds():Observable<MutualFund[]>{
+    return this.http.get<MutualFund[]>(this.apiUrl+'mutual-funds/', {headers:this.headers});
+  }
+
+  getFunds():Observable<Fund[]>{
+    return this.http.get<Fund[]>(this.apiUrl+'funds/', {headers:this.headers});
+  }
+
+  getProfitLosses():Observable<ProfitLoss[]>{
+    return this.http.get<ProfitLoss[]>(this.apiUrl+'profit-losses/', {headers:this.headers});
+  }
+
+  getDividends():Observable<Dividend[]>{
+    return this.http.get<Dividend[]>(this.apiUrl+'dividends/', {headers:this.headers});
   }
 
   

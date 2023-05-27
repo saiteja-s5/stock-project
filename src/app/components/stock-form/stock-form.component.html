@@ -1,4 +1,4 @@
-<form [formGroup]="stockForm" (ngSubmit)="onFormSubmit()">
+<form [formGroup]="stockForm">
   <h3 mat-dialog-title>Add Stock</h3>
   <mat-dialog-content>
     <mat-form-field [style.width.px]="formFieldWidth">
@@ -137,6 +137,7 @@
       [mat-dialog-close]="true"
       cdkFocusInitial
       color="primary"
+      (click)="onFormSubmit()"
     >
       Submit
     </button>
