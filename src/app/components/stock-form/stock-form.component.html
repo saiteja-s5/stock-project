@@ -1,0 +1,57 @@
+<form [formGroup]="stockForm" (ngSubmit)="onFormSubmit()">
+    <div class="form-group">
+      <label for="stock-name">Stock Name</label>
+      <select class="form-control" formControlName="stockName" id="stock-name">
+          <option value="" selected>Enter the Stock Name</option>
+          <option *ngFor="let stock of stocks" [value]="stock.symbol">
+          {{ stock.name }}
+        </option>
+      </select>
+      <div class="errors" *ngIf="stockForm.controls['stockName'].touched && stockForm.controls['stockName'].invalid">
+          <div *ngIf="stockForm.controls['stockName'].errors?.['required']">This field is Mandatory</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="investment-date">Investment Date</label>
+      <input
+        type="date"
+        class="form-control"
+        formControlName="investmentDate"
+        id="investment-date"
+        [max]="today.toISOString().slice(0, 10)"
+      />
+      <div class="errors" *ngIf="stockForm.controls['investmentDate'].touched && stockForm.controls['investmentDate'].invalid">
+          <div *ngIf="stockForm.controls['investmentDate'].errors?.['required']">This field is Mandatory</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="quantity"
+        id="quantity"
+        placeholder="Enter Number of Stocks Bought"
+      />
+      <div class="errors" *ngIf="stockForm.controls['quantity'].touched && stockForm.controls['quantity'].invalid">
+          <div *ngIf="stockForm.controls['quantity'].errors?.['required']">This field is Mandatory</div>
+          <div *ngIf="stockForm.controls['quantity'].errors?.['min']">Buy Quantity should be atleast {{stockForm.controls['quantity'].errors?.['min'].min }}</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="buy-price">Buy Price</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="buyPrice"
+        id="buy-price"
+        step="0.01"
+        placeholder="Enter Buy Price" 
+      />
+      <div class="errors" *ngIf="stockForm.controls['buyPrice'].touched && stockForm.controls['buyPrice'].invalid">
+          <div *ngIf="stockForm.controls['buyPrice'].errors?.['required']">This field is Mandatory</div>
+          <div *ngIf="stockForm.controls['buyPrice'].errors?.['min']">Buy Price should be atleast {{stockForm.controls['buyPrice'].errors?.['min'].min }}</div>
+      </div>
+    </div>
+    <button [disabled]="stockForm.invalid">Submit</button>
+  </form>

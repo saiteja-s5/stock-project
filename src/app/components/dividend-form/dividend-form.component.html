@@ -1,0 +1,43 @@
+<form [formGroup]="dividendForm" (ngSubmit)="onFormSubmit()">
+    <div class="form-group">
+      <label for="company-name">Company Name</label>
+      <select class="form-control" formControlName="companyName" id="company-name">
+          <option value="" selected>Enter the Company Name</option>
+          <option *ngFor="let company of companies" [value]="company.symbol">
+          {{ company.name }}
+        </option>
+      </select>
+      <div class="errors" *ngIf="dividendForm.controls['companyName'].touched && dividendForm.controls['companyName'].invalid">
+          <div *ngIf="dividendForm.controls['companyName'].errors?.['required']">This field is Mandatory</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="credited-date">Credited Date</label>
+      <input
+        type="date"
+        class="form-control"
+        formControlName="creditedDate"
+        id="credited-date"
+        [max]="today.toISOString().slice(0, 10)"
+      />
+      <div class="errors" *ngIf="dividendForm.controls['creditedDate'].touched && dividendForm.controls['creditedDate'].invalid">
+          <div *ngIf="dividendForm.controls['creditedDate'].errors?.['required']">This field is Mandatory</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="credited-amount">Credited Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="creditedAmount"
+        id="credited-amount"
+        step="0.01"
+        placeholder="Enter Credited Amount" 
+      />
+      <div class="errors" *ngIf="dividendForm.controls['creditedAmount'].touched && dividendForm.controls['creditedAmount'].invalid">
+          <div *ngIf="dividendForm.controls['creditedAmount'].errors?.['required']">This field is Mandatory</div>
+          <div *ngIf="dividendForm.controls['creditedAmount'].errors?.['min']">Credited Amount should be atleast {{dividendForm.controls['creditedAmount'].errors?.['min'].min }}</div>
+      </div>
+    </div>
+    <button [disabled]="dividendForm.invalid">Submit</button>
+  </form>

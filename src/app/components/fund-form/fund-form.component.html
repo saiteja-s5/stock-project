@@ -1,0 +1,46 @@
+<form [formGroup]="fundForm" (ngSubmit)="onFormSubmit()">
+    <div class="form-group">
+      <label for="transaction-date">Transaction Date</label>
+      <input
+        type="date"
+        class="form-control"
+        formControlName="transactionDate"
+        id="transaction-date"
+        [max]="today.toISOString().slice(0, 10)"
+      />
+      <div class="errors" *ngIf="fundForm.controls['transactionDate'].touched && fundForm.controls['transactionDate'].invalid">
+          <div *ngIf="fundForm.controls['transactionDate'].errors?.['required']">This field is Mandatory</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="credited-amount">Credited Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="creditedAmount"
+        id="credited-amount"
+        step="0.01"
+        placeholder="Enter Credited Amount" 
+      />
+      <div class="errors" *ngIf="fundForm.controls['creditedAmount'].touched && fundForm.controls['creditedAmount'].invalid">
+          <div *ngIf="fundForm.controls['creditedAmount'].errors?.['required']">This field is Mandatory</div>
+          <div *ngIf="fundForm.controls['creditedAmount'].errors?.['min']">Credited Amount should be atleast {{fundForm.controls['creditedAmount'].errors?.['min'].min }}</div>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="debited-amount">Debited Amount</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="debitedAmount"
+          id="debited-amount"
+          step="0.01"
+          placeholder="Enter Debited Amount" 
+        />
+        <div class="errors" *ngIf="fundForm.controls['debitedAmount'].touched && fundForm.controls['debitedAmount'].invalid">
+            <div *ngIf="fundForm.controls['debitedAmount'].errors?.['required']">This field is Mandatory</div>
+            <div *ngIf="fundForm.controls['debitedAmount'].errors?.['min']">Debited Amount should be atleast {{fundForm.controls['debitedAmount'].errors?.['min'].min }}</div>
+        </div>
+      </div>
+    <button [disabled]="fundForm.invalid">Submit</button>
+  </form>

@@ -1,0 +1,151 @@
+<form [formGroup]="profitLossForm" (ngSubmit)="onFormSubmit()">
+    <div class="form-group">
+      <label for="stock-name">Stock Name</label>
+      <select class="form-control" formControlName="stockName" id="stock-name">
+        <option value="" selected>Enter the Stock Name</option>
+        <option *ngFor="let stock of stocks" [value]="stock.symbol">
+          {{ stock.name }}
+        </option>
+      </select>
+      <div
+        class="errors"
+        *ngIf="
+          profitLossForm.controls['stockName'].touched &&
+          profitLossForm.controls['stockName'].invalid
+        "
+      >
+        <div *ngIf="profitLossForm.controls['stockName'].errors?.['required']">
+          This field is Mandatory
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="quantity"
+        id="quantity"
+        placeholder="Enter Number of Stocks Bought/Sold"
+      />
+      <div
+        class="errors"
+        *ngIf="
+          profitLossForm.controls['quantity'].touched &&
+          profitLossForm.controls['quantity'].invalid
+        "
+      >
+        <div *ngIf="profitLossForm.controls['quantity'].errors?.['required']">
+          This field is Mandatory
+        </div>
+        <div *ngIf="profitLossForm.controls['quantity'].errors?.['min']">
+          Bought/Sold Quantity should be atleast
+          {{profitLossForm.controls['quantity'].errors?.['min'].min }}
+        </div>
+      </div>
+    </div>
+    <div formGroupName="bought">
+      <div class="form-group">
+        <label for="bought-date">Bought Date</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="boughtDate"
+          id="bought-date"
+          [max]="today.toISOString().slice(0, 10)"
+        />
+        <div
+          class="errors"
+          *ngIf="
+            profitLossForm.get('bought.boughtDate')?.touched &&
+            profitLossForm.get('bought.boughtDate')?.invalid
+          "
+        >
+          <div
+            *ngIf="profitLossForm.get('bought.boughtDate')?.errors?.['required']"
+          >
+            This field is Mandatory
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="bought-price">Bought Price</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="boughtPrice"
+          id="bought-price"
+          step="0.01"
+          placeholder="Enter Bought Price"
+        />
+        <div
+          class="errors"
+          *ngIf="
+            profitLossForm.get('bought.boughtPrice')?.touched &&
+            profitLossForm.get('bought.boughtPrice')?.invalid
+          "
+        >
+          <div
+            *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['required']"
+          >
+            This field is Mandatory
+          </div>
+          <div *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['min']">
+            Bought Price should be atleast
+            {{profitLossForm.get('bought.boughtPrice')?.errors?.['min'].min }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div formGroupName="sold">
+      <div class="form-group">
+        <label for="sold-date">Sold Date</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="soldDate"
+          id="sold-date"
+          [max]="today.toISOString().slice(0, 10)"
+        />
+        <div
+          class="errors"
+          *ngIf="
+            profitLossForm.get('sold.soldDate')?.touched &&
+            profitLossForm.get('sold.soldDate')?.invalid
+          "
+        >
+          <div *ngIf="profitLossForm.get('sold.soldDate')?.errors?.['required']">
+            This field is Mandatory
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="sold-price">Sold Price</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="soldPrice"
+          id="sold-price"
+          step="0.01"
+          placeholder="Enter Sold Price"
+        />
+        <div
+          class="errors"
+          *ngIf="
+            profitLossForm.get('sold.soldPrice')?.touched &&
+            profitLossForm.get('sold.soldPrice')?.invalid
+          "
+        >
+          <div *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['required']">
+            This field is Mandatory
+          </div>
+          <div *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['min']">
+            Sold Price should be atleast
+            {{profitLossForm.get('sold.soldPrice')?.errors?.['min'].min }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <button [disabled]="profitLossForm.invalid">Submit</button>
+  </form>
+  
