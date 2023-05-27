@@ -22,12 +22,13 @@ export class StockFormComponent {
     {symbol:"Wipro",name:"Wipro Services"}
   ];
   today = new Date();
+  formFieldWidth = 400;
   ngOnInit(){
     this.stockForm  = this.formBuilder.group({
       stockName:['',Validators.required],
-      investmentDate:[this.today.toISOString().slice(0, 10),Validators.required],
-      quantity:[null,[Validators.required,Validators.min(1)]],
-      buyPrice:[null,[Validators.required,Validators.min(0.01)]]
+      investmentDate:['',Validators.required],
+      quantity:['',[Validators.required,Validators.min(1),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      buyPrice:['',[Validators.required,Validators.min(0.01),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
   }
 
