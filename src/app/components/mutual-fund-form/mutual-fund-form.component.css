@@ -3,16 +3,16 @@
     border: 2px solid red;
 }
 */
-.form-container{
-    width: 590px;
+
+.form-container {
     display: grid;
     justify-content: center;
 }
 
-form{
-    padding: 5px;
+form {
+    padding: 10px;
 }
 
-mat-form-field{
+mat-form-field {
     margin: 5px;
 }

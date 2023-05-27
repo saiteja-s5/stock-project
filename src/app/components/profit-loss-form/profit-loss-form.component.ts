@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { configurations } from 'src/app/configurations/configurations';
 import { CompanyDetails } from 'src/app/models/company-details.model';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'app-profit-loss-form',
@@ -10,38 +11,41 @@ import { CompanyDetails } from 'src/app/models/company-details.model';
 })
 export class ProfitLossFormComponent {
 
-  constructor(private formBuilder:FormBuilder){
-
-  }
-
-  profitLossForm!:FormGroup;
-  stocks:CompanyDetails[]=[
-    {symbol:"ITC",name:"Indian Tobacco"},
-    {symbol:"TCS",name:"Tata Consultancy Services"},
-    {symbol:"Wipro",name:"Wipro Services"}
-  ];
+  profitLossForm!: FormGroup;
+  startDate = configurations.stockStartDate;
   today = configurations.today;
   formFieldWidth = configurations.formFieldWidth;
-  ngOnInit(){
-    this.profitLossForm  = this.formBuilder.group({
-      stockName:['',Validators.required],
-      quantity:[null,[Validators.required,Validators.min(1)]],
+
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
+  }
+
+  stocks: CompanyDetails[] = [
+    { symbol: "ITC", name: "Indian Tobacco" },
+    { symbol: "TCS", name: "Tata Consultancy Services" },
+    { symbol: "Wipro", name: "Wipro Services" }
+  ];
+
+  ngOnInit() {
+    this.profitLossForm = this.formBuilder.group({
+      stockName: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.min(1), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       bought: this.formBuilder.group({
-        boughtDate:[this.today.toISOString().slice(0, 10),Validators.required],
-        boughtPrice:[null,[Validators.required,Validators.min(0.01)]]
+        boughtDate: ['', Validators.required],
+        boughtPrice: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
       }),
-      sold:this.formBuilder.group({
-        soldDate:[this.today.toISOString().slice(0, 10),Validators.required],
-        soldPrice:[null,[Validators.required,Validators.min(0.01)]]
+      sold: this.formBuilder.group({
+        soldDate: ['', Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)],
+        soldPrice: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
       })
     });
   }
 
-  onFormSubmit(){
-    
-      console.log(this.profitLossForm.value)
-   
-      console.log(this.profitLossForm)
+  onFormSubmit() {
+    this.dataTransferService.addProfitLoss(this.profitLossForm.value).subscribe();
+    console.log(this.profitLossForm.value);
+    this.dataTransferService.getProfitLosses().subscribe(profitLosses =>
+      console.log(profitLosses)
+    );
   }
 
 }

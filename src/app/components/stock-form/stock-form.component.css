@@ -1,12 +1,13 @@
-/* .form-control.ng-invalid.ng-touched{
+/* 
+.form-control.ng-invalid.ng-touched{
     border: 2px solid red;
 } 
 */
 
-form{
+form {
     padding: 10px;
 }
 
-mat-form-field{
+mat-form-field {
     margin: 5px;
 }

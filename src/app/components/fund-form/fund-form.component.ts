@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { configurations } from 'src/app/configurations/configurations';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'app-fund-form',
@@ -9,24 +10,28 @@ import { configurations } from 'src/app/configurations/configurations';
 })
 export class FundFormComponent {
 
-  constructor(private formBuilder:FormBuilder){
-
-  }
-
-  fundForm!:FormGroup;
+  fundForm!: FormGroup;
+  startDate = configurations.stockStartDate;
   today = configurations.today;
   formFieldWidth = configurations.formFieldWidth;
 
-  ngOnInit(){
-    this.fundForm  = this.formBuilder.group({
-      transactionDate:[this.today.toISOString().slice(0, 10),Validators.required],
-      creditedAmount:[null,[Validators.required,Validators.min(0.01)]],
-      debitedAmount:[null,[Validators.required,Validators.min(0.01)]]
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
+  }
+
+  ngOnInit() {
+    this.fundForm = this.formBuilder.group({
+      transactionDate: ['', Validators.required],
+      creditedAmount: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      debitedAmount: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
   }
 
-  onFormSubmit(){
+  onFormSubmit() {
+    this.dataTransferService.addFund(this.fundForm.value).subscribe();
     console.log(this.fundForm.value);
+    this.dataTransferService.getFunds().subscribe(funds =>
+      console.log(funds)
+    );
   }
 
 }

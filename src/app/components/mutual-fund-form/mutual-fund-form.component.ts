@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { configurations } from 'src/app/configurations/configurations';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'app-mutual-fund-form',
@@ -9,25 +10,32 @@ import { configurations } from 'src/app/configurations/configurations';
 })
 export class MutualFundFormComponent {
 
-  mutualFundForm!:FormGroup;
+  mutualFundForm!: FormGroup;
+  startDate = configurations.mutualFundStartDate;
   today = configurations.today;
   formFieldWidth = configurations.formFieldWidth;
-  investmentTypes = ['SIP','LUMPSUM'];
-  constructor(private formBuilder:FormBuilder){
+
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
   }
 
-  ngOnInit(){
-    this.mutualFundForm  = this.formBuilder.group({
-      investmentDate:['',Validators.required],
-      amountAdded:['',[Validators.required,Validators.min(0.01),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      investmentType:['',Validators.required],
-      unitsAlloted:['',[Validators.required,Validators.min(0.0001),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      nav:['',[Validators.required,Validators.min(0.0001),Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],      
+  investmentTypes = ['SIP', 'LUMPSUM'];
+
+  ngOnInit() {
+    this.mutualFundForm = this.formBuilder.group({
+      investmentDate: ['', Validators.required],
+      amountAdded: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      investmentType: ['', Validators.required],
+      unitsAlloted: ['', [Validators.required, Validators.min(0.0001), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      nav: ['', [Validators.required, Validators.min(0.0001), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
     });
   }
 
-  onFormSubmit(){
-   
+  onFormSubmit() {
+    this.dataTransferService.addMutualFund(this.mutualFundForm.value).subscribe();
+    console.log(this.mutualFundForm.value);
+    this.dataTransferService.getMutualFunds().subscribe(mutualFunds =>
+      console.log(mutualFunds)
+    );
   }
 
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MutualFundFormComponent } from '../mutual-fund-form/mutual-fund-form.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-mutual-modal-button',
@@ -13,13 +12,12 @@ import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 })
 export class MutualModalButtonComponent {
 
-  constructor(private matDialog:MatDialog){
+  constructor(private matDialog: MatDialog) {
   }
 
-  openMutualFundModal(){
-    this.matDialog.open(MutualFundFormComponent,{
+  openMutualFundModal() {
+    this.matDialog.open(MutualFundFormComponent, {
       disableClose: true,
-      width:'600px',
     })
   }
 

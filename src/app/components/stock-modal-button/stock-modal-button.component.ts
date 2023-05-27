@@ -12,11 +12,11 @@ import { StockFormComponent } from '../stock-form/stock-form.component';
 })
 export class StockModalButtonComponent {
 
-  constructor(private matDialog:MatDialog){
+  constructor(private matDialog: MatDialog) {
   }
 
-  openStockModal(){
-    this.matDialog.open(StockFormComponent,{
+  openStockModal() {
+    this.matDialog.open(StockFormComponent, {
       disableClose: true
     })
   }

@@ -1,5 +1,5 @@
 <form [formGroup]="stockForm">
-  <h3 mat-dialog-title>Add Stock</h3>
+  <h3 mat-dialog-title>Add Stock Transaction</h3>
   <mat-dialog-content>
     <mat-form-field [style.width.px]="formFieldWidth">
       <mat-label>Stock Name</mat-label>
@@ -23,6 +23,7 @@
       <input
         matInput
         formControlName="investmentDate"
+        [min]="startDate"
         [max]="today"
         [matDatepicker]="picker"
       />
@@ -74,7 +75,22 @@
         Please enter a valid number
       </mat-error>
     </mat-form-field>
-    <!-- <div class="form-group">
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Close</button>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      color="primary"
+      (click)="onFormSubmit()"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>
+
+<!-- <div class="form-group">
       <label for="stock-name">Stock Name</label>
       <select class="form-control" formControlName="stockName" id="stock-name">
           <option value="" selected>Enter the Stock Name</option>
@@ -129,17 +145,3 @@
       </div>
     </div>
     <button [disabled]="stockForm.invalid">Submit</button> -->
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close color="accent">Close</button>
-    <button
-      mat-button
-      [mat-dialog-close]="true"
-      cdkFocusInitial
-      color="primary"
-      (click)="onFormSubmit()"
-    >
-      Submit
-    </button>
-  </mat-dialog-actions>
-</form>

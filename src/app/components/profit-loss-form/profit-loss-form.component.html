@@ -1,151 +1,298 @@
-<form [formGroup]="profitLossForm" (ngSubmit)="onFormSubmit()">
-    <div class="form-group">
-      <label for="stock-name">Stock Name</label>
-      <select class="form-control" formControlName="stockName" id="stock-name">
-        <option value="" selected>Enter the Stock Name</option>
-        <option *ngFor="let stock of stocks" [value]="stock.symbol">
+<form [formGroup]="profitLossForm">
+  <h3 mat-dialog-title>Add Profit/Loss Transaction</h3>
+  <mat-dialog-content>
+    <mat-form-field [style.width.px]="formFieldWidth">
+      <mat-label>Stock Name</mat-label>
+      <mat-select formControlName="stockName">
+        <mat-option>Enter the Stock Name</mat-option>
+        <mat-option *ngFor="let stock of stocks" [value]="stock.symbol">
           {{ stock.name }}
-        </option>
-      </select>
-      <div
-        class="errors"
+        </mat-option>
+      </mat-select>
+      <mat-error
         *ngIf="
           profitLossForm.controls['stockName'].touched &&
           profitLossForm.controls['stockName'].invalid
         "
+        >This field is Mandatory</mat-error
       >
-        <div *ngIf="profitLossForm.controls['stockName'].errors?.['required']">
-          This field is Mandatory
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="quantity">Quantity</label>
+    </mat-form-field>
+    <br />
+    <mat-form-field [style.width.px]="formFieldWidth">
+      <mat-label>Quantity</mat-label>
       <input
-        type="number"
-        class="form-control"
-        formControlName="quantity"
-        id="quantity"
+        matInput
         placeholder="Enter Number of Stocks Bought/Sold"
+        formControlName="quantity"
       />
-      <div
-        class="errors"
-        *ngIf="
-          profitLossForm.controls['quantity'].touched &&
-          profitLossForm.controls['quantity'].invalid
-        "
+      <mat-error
+        *ngIf="profitLossForm.controls['quantity'].errors?.['required']"
       >
-        <div *ngIf="profitLossForm.controls['quantity'].errors?.['required']">
-          This field is Mandatory
-        </div>
-        <div *ngIf="profitLossForm.controls['quantity'].errors?.['min']">
-          Bought/Sold Quantity should be atleast
-          {{profitLossForm.controls['quantity'].errors?.['min'].min }}
-        </div>
-      </div>
-    </div>
+        This field is Mandatory
+      </mat-error>
+      <mat-error *ngIf="profitLossForm.controls['quantity'].errors?.['min']">
+        Bought/Sold Quantity should be atleast
+        {{profitLossForm.controls['quantity'].errors?.['min'].min }}
+      </mat-error>
+      <mat-error
+        *ngIf="profitLossForm.controls['quantity'].errors?.['pattern']"
+      >
+        Please enter a valid number
+      </mat-error>
+    </mat-form-field>
+    <br />
     <div formGroupName="bought">
-      <div class="form-group">
-        <label for="bought-date">Bought Date</label>
+      <mat-form-field [style.width.px]="formFieldWidth">
+        <mat-label>Bought Date</mat-label>
         <input
-          type="date"
-          class="form-control"
+          matInput
           formControlName="boughtDate"
-          id="bought-date"
-          [max]="today.toISOString().slice(0, 10)"
+          [min]="startDate"
+          [max]="today"
+          [matDatepicker]="picker1"
         />
-        <div
-          class="errors"
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-error
           *ngIf="
             profitLossForm.get('bought.boughtDate')?.touched &&
             profitLossForm.get('bought.boughtDate')?.invalid
           "
+          >This field is Mandatory</mat-error
         >
-          <div
-            *ngIf="profitLossForm.get('bought.boughtDate')?.errors?.['required']"
-          >
-            This field is Mandatory
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="bought-price">Bought Price</label>
+      </mat-form-field>
+      <br />
+      <mat-form-field [style.width.px]="formFieldWidth">
+        <mat-label>Bought Price</mat-label>
         <input
-          type="number"
-          class="form-control"
-          formControlName="boughtPrice"
-          id="bought-price"
-          step="0.01"
+          matInput
           placeholder="Enter Bought Price"
+          formControlName="boughtPrice"
         />
-        <div
-          class="errors"
-          *ngIf="
-            profitLossForm.get('bought.boughtPrice')?.touched &&
-            profitLossForm.get('bought.boughtPrice')?.invalid
-          "
+        <mat-error
+          *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['required']"
         >
-          <div
-            *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['required']"
-          >
-            This field is Mandatory
-          </div>
-          <div *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['min']">
-            Bought Price should be atleast
-            {{profitLossForm.get('bought.boughtPrice')?.errors?.['min'].min }}
-          </div>
-        </div>
-      </div>
+          This field is Mandatory
+        </mat-error>
+        <mat-error
+          *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['min']"
+        >
+          Bought Price should be atleast
+          {{profitLossForm.get('bought.boughtPrice')?.errors?.['min'].min }}
+        </mat-error>
+        <mat-error
+          *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['pattern']"
+        >
+          Please enter a valid number
+        </mat-error>
+      </mat-form-field>
     </div>
     <div formGroupName="sold">
-      <div class="form-group">
-        <label for="sold-date">Sold Date</label>
+      <mat-form-field [style.width.px]="formFieldWidth">
+        <mat-label>Sold Date</mat-label>
         <input
-          type="date"
-          class="form-control"
+          matInput
           formControlName="soldDate"
-          id="sold-date"
-          [max]="today.toISOString().slice(0, 10)"
+          [min]="startDate"
+          [max]="today"
+          [matDatepicker]="picker2"
         />
-        <div
-          class="errors"
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+        <mat-error
           *ngIf="
             profitLossForm.get('sold.soldDate')?.touched &&
             profitLossForm.get('sold.soldDate')?.invalid
           "
+          >This field is Mandatory</mat-error
         >
-          <div *ngIf="profitLossForm.get('sold.soldDate')?.errors?.['required']">
-            This field is Mandatory
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="sold-price">Sold Price</label>
+      </mat-form-field>
+      <br />
+      <mat-form-field [style.width.px]="formFieldWidth">
+        <mat-label>Sold Price</mat-label>
         <input
-          type="number"
-          class="form-control"
-          formControlName="soldPrice"
-          id="sold-price"
-          step="0.01"
+          matInput
           placeholder="Enter Sold Price"
+          formControlName="soldPrice"
         />
-        <div
-          class="errors"
-          *ngIf="
-            profitLossForm.get('sold.soldPrice')?.touched &&
-            profitLossForm.get('sold.soldPrice')?.invalid
-          "
+        <mat-error
+          *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['required']"
         >
-          <div *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['required']">
-            This field is Mandatory
-          </div>
-          <div *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['min']">
-            Sold Price should be atleast
-            {{profitLossForm.get('sold.soldPrice')?.errors?.['min'].min }}
-          </div>
-        </div>
+          This field is Mandatory
+        </mat-error>
+        <mat-error
+          *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['min']"
+        >
+          Sold Price should be atleast
+          {{profitLossForm.get('sold.soldPrice')?.errors?.['min'].min }}
+        </mat-error>
+        <mat-error
+          *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['pattern']"
+        >
+          Please enter a valid number
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Close</button>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      color="primary"
+      (click)="onFormSubmit()"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>
+
+<!-- <div class="form-group">
+  <label for="stock-name">Stock Name</label>
+  <select class="form-control" formControlName="stockName" id="stock-name">
+    <option value="" selected>Enter the Stock Name</option>
+    <option *ngFor="let stock of stocks" [value]="stock.symbol">
+      {{ stock.name }}
+    </option>
+  </select>
+  <div
+    class="errors"
+    *ngIf="
+      profitLossForm.controls['stockName'].touched &&
+      profitLossForm.controls['stockName'].invalid
+    "
+  >
+    <div *ngIf="profitLossForm.controls['stockName'].errors?.['required']">
+      This field is Mandatory
+    </div>
+  </div>
+</div>
+<div class="form-group">
+  <label for="quantity">Quantity</label>
+  <input
+    type="number"
+    class="form-control"
+    formControlName="quantity"
+    id="quantity"
+    placeholder="Enter Number of Stocks Bought/Sold"
+  />
+  <div
+    class="errors"
+    *ngIf="
+      profitLossForm.controls['quantity'].touched &&
+      profitLossForm.controls['quantity'].invalid
+    "
+  >
+    <div *ngIf="profitLossForm.controls['quantity'].errors?.['required']">
+      This field is Mandatory
+    </div>
+    <div *ngIf="profitLossForm.controls['quantity'].errors?.['min']">
+      Bought/Sold Quantity should be atleast
+      {{profitLossForm.controls['quantity'].errors?.['min'].min }}
+    </div>
+  </div>
+</div>
+<div formGroupName="bought">
+  <div class="form-group">
+    <label for="bought-date">Bought Date</label>
+    <input
+      type="date"
+      class="form-control"
+      formControlName="boughtDate"
+      id="bought-date"
+      [max]="today.toISOString().slice(0, 10)"
+    />
+    <div
+      class="errors"
+      *ngIf="
+        profitLossForm.get('bought.boughtDate')?.touched &&
+        profitLossForm.get('bought.boughtDate')?.invalid
+      "
+    >
+      <div
+        *ngIf="profitLossForm.get('bought.boughtDate')?.errors?.['required']"
+      >
+        This field is Mandatory
       </div>
     </div>
-    <button [disabled]="profitLossForm.invalid">Submit</button>
-  </form>
-  
+  </div>
+  <div class="form-group">
+    <label for="bought-price">Bought Price</label>
+    <input
+      type="number"
+      class="form-control"
+      formControlName="boughtPrice"
+      id="bought-price"
+      step="0.01"
+      placeholder="Enter Bought Price"
+    />
+    <div
+      class="errors"
+      *ngIf="
+        profitLossForm.get('bought.boughtPrice')?.touched &&
+        profitLossForm.get('bought.boughtPrice')?.invalid
+      "
+    >
+      <div
+        *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['required']"
+      >
+        This field is Mandatory
+      </div>
+      <div *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['min']">
+        Bought Price should be atleast
+        {{profitLossForm.get('bought.boughtPrice')?.errors?.['min'].min }}
+      </div>
+    </div>
+  </div>
+</div>
+<div formGroupName="sold">
+  <div class="form-group">
+    <label for="sold-date">Sold Date</label>
+    <input
+      type="date"
+      class="form-control"
+      formControlName="soldDate"
+      id="sold-date"
+      [max]="today.toISOString().slice(0, 10)"
+    />
+    <div
+      class="errors"
+      *ngIf="
+        profitLossForm.get('sold.soldDate')?.touched &&
+        profitLossForm.get('sold.soldDate')?.invalid
+      "
+    >
+      <div *ngIf="profitLossForm.get('sold.soldDate')?.errors?.['required']">
+        This field is Mandatory
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="sold-price">Sold Price</label>
+    <input
+      type="number"
+      class="form-control"
+      formControlName="soldPrice"
+      id="sold-price"
+      step="0.01"
+      placeholder="Enter Sold Price"
+    />
+    <div
+      class="errors"
+      *ngIf="
+        profitLossForm.get('sold.soldPrice')?.touched &&
+        profitLossForm.get('sold.soldPrice')?.invalid
+      "
+    >
+      <div *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['required']">
+        This field is Mandatory
+      </div>
+      <div *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['min']">
+        Sold Price should be atleast
+        {{profitLossForm.get('sold.soldPrice')?.errors?.['min'].min }}
+      </div>
+    </div>
+  </div>
+</div>
+<button [disabled]="profitLossForm.invalid">Submit</button> -->
