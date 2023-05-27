@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { configurations } from 'src/app/configurations/configurations';
 import { CompanyDetails } from 'src/app/models/company-details.model';
 
 @Component({
@@ -19,7 +20,8 @@ export class ProfitLossFormComponent {
     {symbol:"TCS",name:"Tata Consultancy Services"},
     {symbol:"Wipro",name:"Wipro Services"}
   ];
-  today = new Date();
+  today = configurations.today;
+  formFieldWidth = configurations.formFieldWidth;
   ngOnInit(){
     this.profitLossForm  = this.formBuilder.group({
       stockName:['',Validators.required],

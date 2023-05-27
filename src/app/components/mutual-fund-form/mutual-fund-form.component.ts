@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { configurations } from 'src/app/configurations/configurations';
 
 @Component({
   selector: 'app-mutual-fund-form',
@@ -9,8 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class MutualFundFormComponent {
 
   mutualFundForm!:FormGroup;
-  today = new Date();
-  formFieldWidth = 400;
+  today = configurations.today;
+  formFieldWidth = configurations.formFieldWidth;
   investmentTypes = ['SIP','LUMPSUM'];
   constructor(private formBuilder:FormBuilder){
   }

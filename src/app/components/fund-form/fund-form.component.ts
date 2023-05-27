@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { configurations } from 'src/app/configurations/configurations';
 
 @Component({
   selector: 'app-fund-form',
@@ -13,7 +14,8 @@ export class FundFormComponent {
   }
 
   fundForm!:FormGroup;
-  today = new Date();
+  today = configurations.today;
+  formFieldWidth = configurations.formFieldWidth;
 
   ngOnInit(){
     this.fundForm  = this.formBuilder.group({

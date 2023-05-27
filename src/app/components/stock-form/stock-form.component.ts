@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
+import { configurations } from 'src/app/configurations/configurations';
 import { CompanyDetails } from 'src/app/models/company-details.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
@@ -21,8 +22,8 @@ export class StockFormComponent {
     {symbol:"TCS",name:"Tata Consultancy Services"},
     {symbol:"Wipro",name:"Wipro Services"}
   ];
-  today = new Date();
-  formFieldWidth = 400;
+  today = configurations.today;
+  formFieldWidth = configurations.formFieldWidth;
   ngOnInit(){
     this.stockForm  = this.formBuilder.group({
       stockName:['',Validators.required],
