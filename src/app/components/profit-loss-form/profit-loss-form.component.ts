@@ -43,10 +43,13 @@ export class ProfitLossFormComponent {
 
   onFormSubmit() {
     this.isLoading = true;
+    this.profitLossForm.patchValue({ 
+      boughtDate: Utility.formatDate(this.profitLossForm.value.boughtDate),
+      soldDate: Utility.formatDate(this.profitLossForm.value.soldDate)
+    });
     this.dataTransferService.addProfitLoss(this.profitLossForm.value).subscribe(response =>{
       this.isLoading = false;
     });
-    console.log(this.profitLossForm.value);
     this.dataTransferService.getProfitLosses().subscribe(profitLosses =>
       console.log(profitLosses)
     );

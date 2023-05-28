@@ -37,10 +37,10 @@ export class DividendFormComponent {
 
   onFormSubmit() {
     this.isLoading = true;
+    this.dividendForm.patchValue({ creditedDate: Utility.formatDate(this.dividendForm.value.creditedDate) });
     this.dataTransferService.addDividend(this.dividendForm.value).subscribe(response =>{
       this.isLoading = false;
     });
-    console.log(this.dividendForm.value);
     this.dataTransferService.getDividends().subscribe(dividends =>
       console.log(dividends)
     );

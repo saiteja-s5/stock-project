@@ -29,10 +29,10 @@ export class FundFormComponent {
 
   onFormSubmit() {
     this.isLoading = true;
+    this.fundForm.patchValue({ transactionDate: Utility.formatDate(this.fundForm.value.transactionDate) });
     this.dataTransferService.addFund(this.fundForm.value).subscribe(response=>{
       this.isLoading = false;
     });
-    console.log(this.fundForm.value);
     this.dataTransferService.getFunds().subscribe(funds =>
       console.log(funds)
     );

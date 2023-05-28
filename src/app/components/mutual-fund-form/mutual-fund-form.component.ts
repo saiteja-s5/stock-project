@@ -33,10 +33,12 @@ export class MutualFundFormComponent {
 
   onFormSubmit() {
     this.isLoading = true;
+    console.log(this.mutualFundForm.value)
+    this.mutualFundForm.patchValue({ investmentDate: Utility.formatDate(this.mutualFundForm.value.investmentDate) });
+    console.log(this.mutualFundForm.value)
     this.dataTransferService.addMutualFund(this.mutualFundForm.value).subscribe(response=>{
       this.isLoading = false;
     });
-    console.log(this.mutualFundForm.value);
     this.dataTransferService.getMutualFunds().subscribe(mutualFunds =>
       console.log(mutualFunds)
     );
