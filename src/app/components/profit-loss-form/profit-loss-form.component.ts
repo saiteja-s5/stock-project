@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Utility } from 'src/app/utilities/Utility';
 import { CompanyDetails } from 'src/app/models/company-details.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profit-loss-form',
@@ -17,7 +19,7 @@ export class ProfitLossFormComponent {
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,private snackBar:MatSnackBar) {
   }
 
   stocks: CompanyDetails[] = [
@@ -47,6 +49,7 @@ export class ProfitLossFormComponent {
     (this.profitLossForm.controls['sold'] as FormGroup).controls['soldDate'].setValue(Utility.formatDate(this.profitLossForm.value.sold.soldDate));
     this.dataTransferService.addProfitLoss(this.profitLossForm.value).subscribe(response =>{
       this.isLoading = false;
+      this.openSnackBar();
       console.log(response)
     });
     this.dataTransferService.getProfitLosses().subscribe(profitLosses =>
@@ -54,4 +57,10 @@ export class ProfitLossFormComponent {
     );
   }
 
+  openSnackBar() {
+    this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+      duration: 500,
+    });
+  }
+  
 }

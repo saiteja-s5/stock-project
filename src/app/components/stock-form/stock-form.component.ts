@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CompanyDetails } from 'src/app/models/company-details.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Utility } from 'src/app/utilities/Utility';
+import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
 
 @Component({
   selector: 'app-stock-form',
@@ -17,7 +19,7 @@ export class StockFormComponent {
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,public snackBar: MatSnackBar) {
   }
 
   stocks: CompanyDetails[] = [
@@ -40,10 +42,17 @@ export class StockFormComponent {
     this.stockForm.patchValue({ investmentDate: Utility.formatDate(this.stockForm.value.investmentDate) });
     this.dataTransferService.addStock(this.stockForm.value).subscribe(response =>{
       this.isLoading = false;
+      this.openSnackBar();
     });
     this.dataTransferService.getStocks().subscribe(stocks =>
       console.log("All Stocks Response",stocks)
     );
+  }
+
+  openSnackBar() {
+    this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+      duration: 500,
+    });
   }
 
 }

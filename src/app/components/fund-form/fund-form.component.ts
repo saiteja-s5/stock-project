@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utility } from 'src/app/utilities/Utility';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-fund-form',
@@ -16,7 +18,7 @@ export class FundFormComponent {
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,private snackBar:MatSnackBar) {
   }
 
   ngOnInit() {
@@ -32,10 +34,17 @@ export class FundFormComponent {
     this.fundForm.patchValue({ transactionDate: Utility.formatDate(this.fundForm.value.transactionDate) });
     this.dataTransferService.addFund(this.fundForm.value).subscribe(response=>{
       this.isLoading = false;
+      this.openSnackBar();
     });
     this.dataTransferService.getFunds().subscribe(funds =>
       console.log(funds)
     );
+  }
+
+  openSnackBar() {
+    this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+      duration: 500,
+    });
   }
 
 }

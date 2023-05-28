@@ -13,8 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { StockFormComponent } from './components/stock-form/stock-form.component';
@@ -31,6 +30,7 @@ import { DividendModalButtonComponent } from './components/dividend-modal-button
 import { FundModalButtonComponent } from './components/fund-modal-button/fund-modal-button.component';
 import { ProfitLossModalButtonComponent } from './components/profit-loss-modal-button/profit-loss-modal-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SuccessSnackbarComponent } from './components/success-snackbar/success-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     DividendModalButtonComponent,
     FundModalButtonComponent,
     ProfitLossModalButtonComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SuccessSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +63,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     MatInputModule,
     MatProgressSpinnerModule,
     MatNativeDateModule,
+    MatSnackBarModule,
     BrowserAnimationsModule
   ],
   providers: [DataTransferService],
