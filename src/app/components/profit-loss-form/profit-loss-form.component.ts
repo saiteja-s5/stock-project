@@ -35,7 +35,7 @@ export class ProfitLossFormComponent {
         boughtPrice: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
       }),
       sold: this.formBuilder.group({
-        soldDate: ['', Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)],
+        soldDate: ['', Validators.required],
         soldPrice: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
       })
     });
@@ -43,12 +43,11 @@ export class ProfitLossFormComponent {
 
   onFormSubmit() {
     this.isLoading = true;
-    this.profitLossForm.patchValue({ 
-      boughtDate: Utility.formatDate(this.profitLossForm.value.boughtDate),
-      soldDate: Utility.formatDate(this.profitLossForm.value.soldDate)
-    });
+    (this.profitLossForm.controls['bought'] as FormGroup).controls['boughtDate'].setValue(Utility.formatDate(this.profitLossForm.value.bought.boughtDate));
+    (this.profitLossForm.controls['sold'] as FormGroup).controls['soldDate'].setValue(Utility.formatDate(this.profitLossForm.value.sold.soldDate));
     this.dataTransferService.addProfitLoss(this.profitLossForm.value).subscribe(response =>{
       this.isLoading = false;
+      console.log(response)
     });
     this.dataTransferService.getProfitLosses().subscribe(profitLosses =>
       console.log(profitLosses)
