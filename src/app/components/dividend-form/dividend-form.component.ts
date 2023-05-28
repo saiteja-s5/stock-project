@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { configurations } from 'src/app/configurations/configurations';
+import { Utility } from 'src/app/utilities/Utility';
 import { CompanyDetails } from 'src/app/models/company-details.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
@@ -13,9 +13,10 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 export class DividendFormComponent {
 
   dividendForm!: FormGroup;
-  startDate = configurations.stockStartDate;
-  today = configurations.today;
-  formFieldWidth = configurations.formFieldWidth;
+  startDate = Utility.stockStartDate;
+  today = Utility.today;
+  formFieldWidth = Utility.formFieldWidth;
+  isLoading = false;
 
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
   }
@@ -35,7 +36,10 @@ export class DividendFormComponent {
   }
 
   onFormSubmit() {
-    this.dataTransferService.addDividend(this.dividendForm.value).subscribe();
+    this.isLoading = true;
+    this.dataTransferService.addDividend(this.dividendForm.value).subscribe(response =>{
+      this.isLoading = false;
+    });
     console.log(this.dividendForm.value);
     this.dataTransferService.getDividends().subscribe(dividends =>
       console.log(dividends)

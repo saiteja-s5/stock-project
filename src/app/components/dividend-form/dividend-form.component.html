@@ -1,74 +1,88 @@
 <form [formGroup]="dividendForm">
-  <h3 mat-dialog-title>Add Dividend Transaction</h3>
-  <mat-dialog-content>
-    <mat-form-field [style.width.px]="formFieldWidth">
-      <mat-label>Company Name</mat-label>
-      <mat-select formControlName="companyName">
-        <mat-option>Enter the Company Name</mat-option>
-        <mat-option *ngFor="let company of companies" [value]="company.symbol">
-          {{ company.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error
-        *ngIf="
-          dividendForm.controls['companyName'].touched &&
-          dividendForm.controls['companyName'].invalid
-        "
-        >This field is Mandatory</mat-error
+  <div *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+  <div *ngIf="!isLoading">
+    <h3 mat-dialog-title>Add Dividend Transaction</h3>
+    <mat-dialog-content>
+      <mat-form-field [style.width.px]="formFieldWidth">
+        <mat-label>Company Name</mat-label>
+        <mat-select formControlName="companyName">
+          <mat-option>Enter the Company Name</mat-option>
+          <mat-option
+            *ngFor="let company of companies"
+            [value]="company.symbol"
+          >
+            {{ company.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            dividendForm.controls['companyName'].touched &&
+            dividendForm.controls['companyName'].invalid
+          "
+          >This field is Mandatory</mat-error
+        >
+      </mat-form-field>
+      <br />
+      <mat-form-field [style.width.px]="formFieldWidth">
+        <mat-label>Credited Date</mat-label>
+        <input
+          matInput
+          formControlName="creditedDate"
+          [min]="startDate"
+          [max]="today"
+          [matDatepicker]="picker"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error
+          *ngIf="
+            dividendForm.controls['creditedDate'].touched &&
+            dividendForm.controls['creditedDate'].invalid
+          "
+          >This field is Mandatory</mat-error
+        >
+      </mat-form-field>
+      <br />
+      <mat-form-field [style.width.px]="formFieldWidth">
+        <mat-label>Credited Amount</mat-label>
+        <input
+          matInput
+          placeholder="Enter Credited Amount"
+          formControlName="creditedAmount"
+        />
+        <mat-error
+          *ngIf="dividendForm.controls['creditedAmount'].errors?.['required']"
+        >
+          This field is Mandatory
+        </mat-error>
+        <mat-error
+          *ngIf="dividendForm.controls['creditedAmount'].errors?.['min']"
+        >
+          Credited Amount should be atleast
+          {{dividendForm.controls['creditedAmount'].errors?.['min'].min }}
+        </mat-error>
+        <mat-error
+          *ngIf="dividendForm.controls['creditedAmount'].errors?.['pattern']"
+        >
+          Please enter a valid number
+        </mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button mat-dialog-close color="warn">Close</button>
+      <button
+        mat-raised-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        color="primary"
+        (click)="onFormSubmit()"
       >
-    </mat-form-field>
-    <br />
-    <mat-form-field [style.width.px]="formFieldWidth">
-      <mat-label>Credited Date</mat-label>
-      <input
-        matInput
-        formControlName="creditedDate"
-        [min]="startDate"
-        [max]="today"
-        [matDatepicker]="picker"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error
-        *ngIf="
-        dividendForm.controls['creditedDate'].touched &&
-        dividendForm.controls['creditedDate'].invalid
-        "
-        >This field is Mandatory</mat-error
-      >
-    </mat-form-field>
-    <br />
-    <mat-form-field [style.width.px]="formFieldWidth">
-      <mat-label>Credited Amount</mat-label>
-      <input
-        matInput
-        placeholder="Enter Credited Amount"
-        formControlName="creditedAmount"
-      />
-      <mat-error *ngIf="dividendForm.controls['creditedAmount'].errors?.['required']">
-        This field is Mandatory
-      </mat-error>
-      <mat-error *ngIf="dividendForm.controls['creditedAmount'].errors?.['min']">
-        Credited Amount should be atleast
-        {{dividendForm.controls['creditedAmount'].errors?.['min'].min }}
-      </mat-error>
-      <mat-error *ngIf="dividendForm.controls['creditedAmount'].errors?.['pattern']">
-        Please enter a valid number
-      </mat-error>
-    </mat-form-field>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close color="warn">Close</button>
-    <button
-      mat-raised-button
-      [mat-dialog-close]="true"
-      cdkFocusInitial
-      color="primary"
-      (click)="onFormSubmit()"
-    >
-      Submit
-    </button>
-  </mat-dialog-actions>
+        Submit
+      </button>
+    </mat-dialog-actions>
+  </div>
 </form>
 
 <!-- <div class="form-group">

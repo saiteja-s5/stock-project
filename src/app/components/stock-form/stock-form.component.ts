@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { configurations } from 'src/app/configurations/configurations';
 import { CompanyDetails } from 'src/app/models/company-details.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { Utility } from 'src/app/utilities/Utility';
 
 @Component({
   selector: 'app-stock-form',
@@ -12,9 +12,10 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 export class StockFormComponent {
 
   stockForm!: FormGroup;
-  startDate = configurations.stockStartDate;
-  today = configurations.today;
-  formFieldWidth = configurations.formFieldWidth;
+  startDate = Utility.stockStartDate;
+  today = Utility.today;
+  formFieldWidth = Utility.formFieldWidth;
+  isLoading = false;
 
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
   }
@@ -35,10 +36,13 @@ export class StockFormComponent {
   }
 
   onFormSubmit() {
-    this.dataTransferService.addStock(this.stockForm.value).subscribe();
-    console.log(this.stockForm.value);
+    this.isLoading = true;
+    this.stockForm.patchValue({ investmentDate: Utility.formatDate(this.stockForm.value.investmentDate) });
+    this.dataTransferService.addStock(this.stockForm.value).subscribe(response =>{
+      this.isLoading = false;
+    });
     this.dataTransferService.getStocks().subscribe(stocks =>
-      console.log(stocks)
+      console.log("All Stocks Response",stocks)
     );
   }
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { configurations } from 'src/app/configurations/configurations';
+import { Utility } from 'src/app/utilities/Utility';
 import { CompanyDetails } from 'src/app/models/company-details.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
@@ -12,9 +12,10 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 export class ProfitLossFormComponent {
 
   profitLossForm!: FormGroup;
-  startDate = configurations.stockStartDate;
-  today = configurations.today;
-  formFieldWidth = configurations.formFieldWidth;
+  startDate = Utility.stockStartDate;
+  today = Utility.today;
+  formFieldWidth = Utility.formFieldWidth;
+  isLoading = false;
 
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
   }
@@ -41,7 +42,10 @@ export class ProfitLossFormComponent {
   }
 
   onFormSubmit() {
-    this.dataTransferService.addProfitLoss(this.profitLossForm.value).subscribe();
+    this.isLoading = true;
+    this.dataTransferService.addProfitLoss(this.profitLossForm.value).subscribe(response =>{
+      this.isLoading = false;
+    });
     console.log(this.profitLossForm.value);
     this.dataTransferService.getProfitLosses().subscribe(profitLosses =>
       console.log(profitLosses)

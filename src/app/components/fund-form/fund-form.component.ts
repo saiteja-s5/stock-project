@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { configurations } from 'src/app/configurations/configurations';
+import { Utility } from 'src/app/utilities/Utility';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
@@ -11,9 +11,10 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 export class FundFormComponent {
 
   fundForm!: FormGroup;
-  startDate = configurations.stockStartDate;
-  today = configurations.today;
-  formFieldWidth = configurations.formFieldWidth;
+  startDate = Utility.stockStartDate;
+  today = Utility.today;
+  formFieldWidth = Utility.formFieldWidth;
+  isLoading = false;
 
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService) {
   }
@@ -27,7 +28,10 @@ export class FundFormComponent {
   }
 
   onFormSubmit() {
-    this.dataTransferService.addFund(this.fundForm.value).subscribe();
+    this.isLoading = true;
+    this.dataTransferService.addFund(this.fundForm.value).subscribe(response=>{
+      this.isLoading = false;
+    });
     console.log(this.fundForm.value);
     this.dataTransferService.getFunds().subscribe(funds =>
       console.log(funds)

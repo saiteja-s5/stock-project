@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 
 import { AppComponent } from './app.component';
@@ -28,6 +30,7 @@ import { MutualModalButtonComponent } from './components/mutual-modal-button/mut
 import { DividendModalButtonComponent } from './components/dividend-modal-button/dividend-modal-button.component';
 import { FundModalButtonComponent } from './components/fund-modal-button/fund-modal-button.component';
 import { ProfitLossModalButtonComponent } from './components/profit-loss-modal-button/profit-loss-modal-button.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import { ProfitLossModalButtonComponent } from './components/profit-loss-modal-b
     MutualModalButtonComponent,
     DividendModalButtonComponent,
     FundModalButtonComponent,
-    ProfitLossModalButtonComponent
+    ProfitLossModalButtonComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,7 @@ import { ProfitLossModalButtonComponent } from './components/profit-loss-modal-b
     MatSelectModule,
     MatDatepickerModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     MatNativeDateModule,
     BrowserAnimationsModule
   ],

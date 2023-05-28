@@ -1,125 +1,135 @@
 <form [formGroup]="mutualFundForm">
-  <div class="form-container">
-    <h3 mat-dialog-title>Add Mutual Fund Transaction</h3>
-    <mat-dialog-content>
-      <mat-form-field [style.width.px]="formFieldWidth">
-        <mat-label>Investment Date</mat-label>
-        <input
-          matInput
-          formControlName="investmentDate"
-          [min]="startDate"
-          [max]="today"
-          [matDatepicker]="picker"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error
-          *ngIf="
-            mutualFundForm.controls['investmentDate'].touched &&
-            mutualFundForm.controls['investmentDate'].invalid
-          "
-          >This field is Mandatory</mat-error
+  <div *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+  <div *ngIf="!isLoading">
+    <div class="form-container">
+      <h3 mat-dialog-title>Add Mutual Fund Transaction</h3>
+      <mat-dialog-content>
+        <mat-form-field [style.width.px]="formFieldWidth">
+          <mat-label>Investment Date</mat-label>
+          <input
+            matInput
+            formControlName="investmentDate"
+            [min]="startDate"
+            [max]="today"
+            [matDatepicker]="picker"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="
+              mutualFundForm.controls['investmentDate'].touched &&
+              mutualFundForm.controls['investmentDate'].invalid
+            "
+            >This field is Mandatory</mat-error
+          >
+        </mat-form-field>
+        <br />
+        <mat-form-field [style.width.px]="formFieldWidth">
+          <mat-label>Amount Added</mat-label>
+          <input
+            matInput
+            placeholder="Enter Amount Added"
+            formControlName="amountAdded"
+          />
+          <mat-error
+            *ngIf="mutualFundForm.controls['amountAdded'].errors?.['required']"
+          >
+            This field is Mandatory
+          </mat-error>
+          <mat-error
+            *ngIf="mutualFundForm.controls['amountAdded'].errors?.['min']"
+          >
+            Amount Added should be atleast
+            {{mutualFundForm.controls['amountAdded'].errors?.['min'].min }}
+          </mat-error>
+          <mat-error
+            *ngIf="mutualFundForm.controls['amountAdded'].errors?.['pattern']"
+          >
+            Please enter a valid number
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field [style.width.px]="formFieldWidth">
+          <mat-label>Investment Type</mat-label>
+          <mat-select formControlName="investmentType">
+            <mat-option>Enter Investment Type</mat-option>
+            <mat-option *ngFor="let type of investmentTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              mutualFundForm.controls['investmentType'].touched &&
+              mutualFundForm.controls['investmentType'].invalid
+            "
+            >This field is Mandatory</mat-error
+          >
+        </mat-form-field>
+        <br />
+        <mat-form-field [style.width.px]="formFieldWidth">
+          <mat-label>Units Alloted</mat-label>
+          <input
+            matInput
+            placeholder="Enter Units Alloted"
+            formControlName="unitsAlloted"
+          />
+          <mat-error
+            *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['required']"
+          >
+            This field is Mandatory
+          </mat-error>
+          <mat-error
+            *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['min']"
+          >
+            Units alloted should be atleast
+            {{mutualFundForm.controls['unitsAlloted'].errors?.['min'].min }}
+          </mat-error>
+          <mat-error
+            *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['pattern']"
+          >
+            Please enter a valid number
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field [style.width.px]="formFieldWidth">
+          <mat-label>Net Asset Value</mat-label>
+          <input
+            matInput
+            placeholder="Enter Net Asset Value"
+            formControlName="nav"
+          />
+          <mat-error
+            *ngIf="mutualFundForm.controls['nav'].errors?.['required']"
+          >
+            This field is Mandatory
+          </mat-error>
+          <mat-error *ngIf="mutualFundForm.controls['nav'].errors?.['min']">
+            NAV should be atleast
+            {{mutualFundForm.controls['nav'].errors?.['min'].min }}
+          </mat-error>
+          <mat-error *ngIf="mutualFundForm.controls['nav'].errors?.['pattern']">
+            Please enter a valid number
+          </mat-error>
+        </mat-form-field>
+      </mat-dialog-content>
+      <mat-dialog-actions align="end">
+        <button mat-raised-button mat-dialog-close color="warn">Close</button>
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          cdkFocusInitial
+          color="primary"
+          (click)="onFormSubmit()"
         >
-      </mat-form-field>
-      <br />
-      <mat-form-field [style.width.px]="formFieldWidth">
-        <mat-label>Amount Added</mat-label>
-        <input
-          matInput
-          placeholder="Enter Amount Added"
-          formControlName="amountAdded"
-        />
-        <mat-error
-          *ngIf="mutualFundForm.controls['amountAdded'].errors?.['required']"
-        >
-          This field is Mandatory
-        </mat-error>
-        <mat-error
-          *ngIf="mutualFundForm.controls['amountAdded'].errors?.['min']"
-        >
-          Amount Added should be atleast
-          {{mutualFundForm.controls['amountAdded'].errors?.['min'].min }}
-        </mat-error>
-        <mat-error
-          *ngIf="mutualFundForm.controls['amountAdded'].errors?.['pattern']"
-        >
-          Please enter a valid number
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field [style.width.px]="formFieldWidth">
-        <mat-label>Investment Type</mat-label>
-        <mat-select formControlName="investmentType">
-          <mat-option>Enter Investment Type</mat-option>
-          <mat-option *ngFor="let type of investmentTypes" [value]="type">
-            {{ type }}
-          </mat-option>
-        </mat-select>
-        <mat-error
-          *ngIf="
-            mutualFundForm.controls['investmentType'].touched &&
-            mutualFundForm.controls['investmentType'].invalid
-          "
-          >This field is Mandatory</mat-error
-        >
-      </mat-form-field>
-      <br />
-      <mat-form-field [style.width.px]="formFieldWidth">
-        <mat-label>Units Alloted</mat-label>
-        <input
-          matInput
-          placeholder="Enter Units Alloted"
-          formControlName="unitsAlloted"
-        />
-        <mat-error
-          *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['required']"
-        >
-          This field is Mandatory
-        </mat-error>
-        <mat-error
-          *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['min']"
-        >
-          Units alloted should be atleast
-          {{mutualFundForm.controls['unitsAlloted'].errors?.['min'].min }}
-        </mat-error>
-        <mat-error
-          *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['pattern']"
-        >
-          Please enter a valid number
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field [style.width.px]="formFieldWidth">
-        <mat-label>Net Asset Value</mat-label>
-        <input
-          matInput
-          placeholder="Enter Net Asset Value"
-          formControlName="nav"
-        />
-        <mat-error *ngIf="mutualFundForm.controls['nav'].errors?.['required']">
-          This field is Mandatory
-        </mat-error>
-        <mat-error *ngIf="mutualFundForm.controls['nav'].errors?.['min']">
-          NAV should be atleast
-          {{mutualFundForm.controls['nav'].errors?.['min'].min }}
-        </mat-error>
-        <mat-error *ngIf="mutualFundForm.controls['nav'].errors?.['pattern']">
-          Please enter a valid number
-        </mat-error>
-      </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-raised-button mat-dialog-close color="warn">Close</button>
-      <button
-        mat-raised-button
-        [mat-dialog-close]="true"
-        cdkFocusInitial
-        color="primary"
-        (click)="onFormSubmit()"
-      >
-        Submit
-      </button>
-    </mat-dialog-actions>
+          Submit
+        </button>
+      </mat-dialog-actions>
+    </div>
   </div>
 </form>
 
