@@ -151,6 +151,7 @@
         [mat-dialog-close]="true"
         cdkFocusInitial
         color="primary"
+        [disabled]="profitLossForm.invalid"
         (click)="onFormSubmit()"
       >
         Submit

@@ -43,7 +43,7 @@ export class FundFormComponent {
 
   openSnackBar() {
     this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      duration: 500,
+      duration: Utility.snackBarDuration,
     });
   }
 

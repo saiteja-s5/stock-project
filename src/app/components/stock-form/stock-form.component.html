@@ -87,6 +87,7 @@
         [mat-dialog-close]="true"
         cdkFocusInitial
         color="primary"
+        [disabled]="stockForm.invalid"
         (click)="onFormSubmit()"
       >
         Submit

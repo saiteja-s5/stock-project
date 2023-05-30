@@ -124,6 +124,7 @@
           [mat-dialog-close]="true"
           cdkFocusInitial
           color="primary"
+          [disabled]="mutualFundForm.invalid"
           (click)="onFormSubmit()"
         >
           Submit

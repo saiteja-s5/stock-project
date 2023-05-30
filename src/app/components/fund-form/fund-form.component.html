@@ -78,6 +78,7 @@
         [mat-dialog-close]="true"
         cdkFocusInitial
         color="primary"
+        [disabled]="fundForm.invalid"
         (click)="onFormSubmit()"
       >
         Submit

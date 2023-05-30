@@ -14,6 +14,7 @@ import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.c
 export class StockFormComponent {
 
   stockForm!: FormGroup;
+  stocks!: CompanyNameDropdown[];
   startDate = Utility.stockStartDate;
   today = Utility.today;
   formFieldWidth = Utility.formFieldWidth;
@@ -22,11 +23,11 @@ export class StockFormComponent {
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,public snackBar: MatSnackBar) {
   }
 
-  stocks!: CompanyNameDropdown[];
-
   ngOnInit() {
+    this.isLoading = true;
     this.dataTransferService.getCompanyNameDropDowns().subscribe(companies =>{
       this.stocks = companies;
+      this.isLoading = false;
     })
     this.stockForm = this.formBuilder.group({
       stockName: ['', Validators.required],
@@ -50,7 +51,7 @@ export class StockFormComponent {
 
   openSnackBar() {
     this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      duration: 500,
+      duration: Utility.snackBarDuration,
     });
   }
 

@@ -14,6 +14,7 @@ import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model'
 export class ProfitLossFormComponent {
 
   profitLossForm!: FormGroup;
+  stocks!: CompanyNameDropdown[];
   startDate = Utility.stockStartDate;
   today = Utility.today;
   formFieldWidth = Utility.formFieldWidth;
@@ -22,9 +23,12 @@ export class ProfitLossFormComponent {
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,private snackBar:MatSnackBar) {
   }
 
-  stocks!: CompanyNameDropdown[];
-
   ngOnInit() {
+    this.isLoading = true;
+    this.dataTransferService.getCompanyNameDropDowns().subscribe(companies =>{
+      this.stocks = companies;
+      this.isLoading = false;
+    })
     this.profitLossForm = this.formBuilder.group({
       stockName: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.min(1), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
@@ -55,7 +59,7 @@ export class ProfitLossFormComponent {
 
   openSnackBar() {
     this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      duration: 500,
+      duration: Utility.snackBarDuration,
     });
   }
   

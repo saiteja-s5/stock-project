@@ -4,6 +4,9 @@ export const Utility = {
     stockStartDate: new Date("2021-01-18"),
     mutualFundStartDate: new Date("2021-08-14"),
     formFieldWidth: 400,
+    spinnerDiameter : 400,
+    spinnerStrokeWidth : 10,
+    snackBarDuration:1000,
     formatDate: function (date: Date) {
         let d = new Date(date),
             month = '' + (d.getMonth() + 1),
