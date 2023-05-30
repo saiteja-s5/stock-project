@@ -11,9 +11,9 @@
           <mat-option>Enter the Company Name</mat-option>
           <mat-option
             *ngFor="let company of companies"
-            [value]="company.symbol"
+            [value]="company.companySymbol"
           >
-            {{ company.name }}
+            {{ company.companyName }}
           </mat-option>
         </mat-select>
         <mat-error

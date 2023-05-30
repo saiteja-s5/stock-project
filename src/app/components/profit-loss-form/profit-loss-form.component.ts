@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Utility } from 'src/app/utilities/Utility';
-import { CompanyDetails } from 'src/app/models/company-details.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
 
 @Component({
   selector: 'app-profit-loss-form',
@@ -22,11 +22,7 @@ export class ProfitLossFormComponent {
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,private snackBar:MatSnackBar) {
   }
 
-  stocks: CompanyDetails[] = [
-    { symbol: "ITC", name: "Indian Tobacco" },
-    { symbol: "TCS", name: "Tata Consultancy Services" },
-    { symbol: "Wipro", name: "Wipro Services" }
-  ];
+  stocks!: CompanyNameDropdown[];
 
   ngOnInit() {
     this.profitLossForm = this.formBuilder.group({

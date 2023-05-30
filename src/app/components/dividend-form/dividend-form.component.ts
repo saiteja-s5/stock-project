@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utility } from 'src/app/utilities/Utility';
-import { CompanyDetails } from 'src/app/models/company-details.model';
+import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -23,11 +23,7 @@ export class DividendFormComponent {
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,private snackBar:MatSnackBar) {
   }
 
-  companies: CompanyDetails[] = [
-    { symbol: "ITC", name: "Indian Tobacco" },
-    { symbol: "TCS", name: "Tata Consultancy Services" },
-    { symbol: "Wipro", name: "Wipro Services" }
-  ];
+  companies!: CompanyNameDropdown[];
 
   ngOnInit() {
     this.dividendForm = this.formBuilder.group({

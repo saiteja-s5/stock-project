@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CompanyDetails } from 'src/app/models/company-details.model';
+import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Utility } from 'src/app/utilities/Utility';
 import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
@@ -22,13 +22,12 @@ export class StockFormComponent {
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,public snackBar: MatSnackBar) {
   }
 
-  stocks: CompanyDetails[] = [
-    { symbol: "ITC", name: "Indian Tobacco" },
-    { symbol: "TCS", name: "Tata Consultancy Services" },
-    { symbol: "Wipro", name: "Wipro Services" }
-  ];
+  stocks!: CompanyNameDropdown[];
 
   ngOnInit() {
+    this.dataTransferService.getCompanyNameDropDowns().subscribe(companies =>{
+      this.stocks = companies;
+    })
     this.stockForm = this.formBuilder.group({
       stockName: ['', Validators.required],
       investmentDate: ['', Validators.required],

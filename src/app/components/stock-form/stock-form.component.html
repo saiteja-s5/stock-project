@@ -9,8 +9,8 @@
         <mat-label>Stock Name</mat-label>
         <mat-select formControlName="stockName">
           <mat-option>Enter the Stock Name</mat-option>
-          <mat-option *ngFor="let stock of stocks" [value]="stock.symbol">
-            {{ stock.name }}
+          <mat-option *ngFor="let stock of stocks" [value]="stock.companySymbol">
+            {{ stock.companyName }}
           </mat-option>
         </mat-select>
         <mat-error
