@@ -1,8 +1,7 @@
 export interface StockTableRow{
-    stockId:number;
     stockName:string;
-    investmentDate:Date;
     quantity:number;
+    buyDate:Date;
     buyPrice:number;
     buyValue:number;
     holdDuration:string;

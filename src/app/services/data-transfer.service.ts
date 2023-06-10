@@ -12,6 +12,7 @@ import { Fund } from '../models/fund.model';
 import { ProfitLoss } from '../models/profit-loss.model';
 import { Dividend } from '../models/dividend.model';
 import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
+import { StockTableRow } from '../models/stock-table.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +44,8 @@ export class DataTransferService {
     return this.http.post<Dividend>(this.apiUrl + 'dividends', dividend, { headers: this.headers });
   }
 
-  getStocks(): Observable<Stock[]> {
-    return this.http.get<Stock[]>(this.apiUrl + 'stocks', { headers: this.headers });
+  getStocksForTable(): Observable<StockTableRow[]> {
+    return this.http.get<StockTableRow[]>(this.apiUrl + 'stocks', { headers: this.headers });
   }
 
   getMutualFunds(): Observable<MutualFund[]> {

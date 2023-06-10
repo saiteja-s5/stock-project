@@ -44,7 +44,7 @@ export class StockFormComponent {
       this.isLoading = false;
       this.openSnackBar();
     });
-    this.dataTransferService.getStocks().subscribe(stocks =>
+    this.dataTransferService.getStocksForTable().subscribe(stocks =>
       console.log("All Stocks Response",stocks)
     );
   }

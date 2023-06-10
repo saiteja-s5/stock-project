@@ -31,6 +31,7 @@ import { FundModalButtonComponent } from './components/fund-modal-button/fund-mo
 import { ProfitLossModalButtonComponent } from './components/profit-loss-modal-button/profit-loss-modal-button.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SuccessSnackbarComponent } from './components/success-snackbar/success-snackbar.component';
+import { StockAgGridComponent } from './components/stock-ag-grid/stock-ag-grid.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SuccessSnackbarComponent } from './components/success-snackbar/success-
     FundModalButtonComponent,
     ProfitLossModalButtonComponent,
     SpinnerComponent,
-    SuccessSnackbarComponent
+    SuccessSnackbarComponent,
+    StockAgGridComponent
   ],
   imports: [
     BrowserModule,
