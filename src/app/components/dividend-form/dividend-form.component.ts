@@ -44,7 +44,7 @@ export class DividendFormComponent {
       this.isLoading = false;
       this.openSnackBar();
     });
-    this.dataTransferService.getDividends().subscribe(dividends =>
+    this.dataTransferService.getDividendsForTable().subscribe(dividends =>
       console.log(dividends)
     );
   }

@@ -13,6 +13,10 @@ import { ProfitLoss } from '../models/profit-loss.model';
 import { Dividend } from '../models/dividend.model';
 import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
 import { StockTableRow } from '../models/stock-table.model';
+import { MutualFundTableRow } from '../models/mutualFund-table.model';
+import { DividendTableRow } from '../models/dividend-table.model';
+import { ProfitLossTableRow } from '../models/profit-loss-table.model';
+import { FundTableRow } from '../models/fund-table.model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,20 +52,20 @@ export class DataTransferService {
     return this.http.get<StockTableRow[]>(this.apiUrl + 'stocks', { headers: this.headers });
   }
 
-  getMutualFunds(): Observable<MutualFund[]> {
-    return this.http.get<MutualFund[]>(this.apiUrl + 'mutual-funds', { headers: this.headers });
+  getMutualFundsForTable(): Observable<MutualFundTableRow[]> {
+    return this.http.get<MutualFundTableRow[]>(this.apiUrl + 'mutual-funds', { headers: this.headers });
   }
 
-  getFunds(): Observable<Fund[]> {
-    return this.http.get<Fund[]>(this.apiUrl + 'funds', { headers: this.headers });
+  getFundsForTable(): Observable<FundTableRow[]> {
+    return this.http.get<FundTableRow[]>(this.apiUrl + 'funds', { headers: this.headers });
   }
 
-  getProfitLosses(): Observable<ProfitLoss[]> {
-    return this.http.get<ProfitLoss[]>(this.apiUrl + 'profit-losses', { headers: this.headers });
+  getProfitLossesForTable(): Observable<ProfitLossTableRow[]> {
+    return this.http.get<ProfitLossTableRow[]>(this.apiUrl + 'profit-losses', { headers: this.headers });
   }
 
-  getDividends(): Observable<Dividend[]> {
-    return this.http.get<Dividend[]>(this.apiUrl + 'dividends', { headers: this.headers });
+  getDividendsForTable(): Observable<DividendTableRow[]> {
+    return this.http.get<DividendTableRow[]>(this.apiUrl + 'dividends', { headers: this.headers });
   }
 
   getCompanyNameDropDowns(): Observable<CompanyNameDropdown[]> {

@@ -36,7 +36,7 @@ export class FundFormComponent {
       this.isLoading = false;
       this.openSnackBar();
     });
-    this.dataTransferService.getFunds().subscribe(funds =>
+    this.dataTransferService.getFundsForTable().subscribe(funds =>
       console.log(funds)
     );
   }

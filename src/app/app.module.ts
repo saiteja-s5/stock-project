@@ -32,6 +32,10 @@ import { ProfitLossModalButtonComponent } from './components/profit-loss-modal-b
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SuccessSnackbarComponent } from './components/success-snackbar/success-snackbar.component';
 import { StockAgGridComponent } from './components/stock-ag-grid/stock-ag-grid.component';
+import { MutualFundAgGridComponent } from './components/mutual-fund-ag-grid/mutual-fund-ag-grid.component';
+import { FundAgGridComponent } from './components/fund-ag-grid/fund-ag-grid.component';
+import { DividendAgGridComponent } from './components/dividend-ag-grid/dividend-ag-grid.component';
+import { ProfitLossAgGridComponent } from './components/profit-loss-ag-grid/profit-loss-ag-grid.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,11 @@ import { StockAgGridComponent } from './components/stock-ag-grid/stock-ag-grid.c
     ProfitLossModalButtonComponent,
     SpinnerComponent,
     SuccessSnackbarComponent,
-    StockAgGridComponent
+    StockAgGridComponent,
+    MutualFundAgGridComponent,
+    FundAgGridComponent,
+    DividendAgGridComponent,
+    ProfitLossAgGridComponent
   ],
   imports: [
     BrowserModule,

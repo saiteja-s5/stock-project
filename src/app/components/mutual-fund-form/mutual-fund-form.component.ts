@@ -42,7 +42,7 @@ export class MutualFundFormComponent {
       this.isLoading = false;
       this.openSnackBar();
     });
-    this.dataTransferService.getMutualFunds().subscribe(mutualFunds =>
+    this.dataTransferService.getMutualFundsForTable().subscribe(mutualFunds =>
       console.log(mutualFunds)
     );
   }

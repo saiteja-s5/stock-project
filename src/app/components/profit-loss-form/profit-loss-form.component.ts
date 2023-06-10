@@ -52,7 +52,7 @@ export class ProfitLossFormComponent {
       this.openSnackBar();
       console.log(response)
     });
-    this.dataTransferService.getProfitLosses().subscribe(profitLosses =>
+    this.dataTransferService.getProfitLossesForTable().subscribe(profitLosses =>
       console.log(profitLosses)
     );
   }
