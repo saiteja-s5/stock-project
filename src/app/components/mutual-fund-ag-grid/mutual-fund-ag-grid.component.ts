@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ColDef, ColumnApi, GridReadyEvent } from 'ag-grid-community';
 import { Observable } from 'rxjs';
-import { MutualFundTableRow } from 'src/app/models/mutualFund-table.model';
+import { MutualFundTableRow } from 'src/app/models/mutual-fund-table.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({

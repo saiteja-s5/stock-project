@@ -7,16 +7,20 @@ import {
 import { environment } from '../environments/environment';
 import { Stock } from '../models/stock.model';
 import { Observable, map } from 'rxjs';
-import { MutualFund } from '../models/mutualFund.model';
+import { MutualFund } from '../models/mutual-fund.model';
 import { Fund } from '../models/fund.model';
 import { ProfitLoss } from '../models/profit-loss.model';
 import { Dividend } from '../models/dividend.model';
 import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
 import { StockTableRow } from '../models/stock-table.model';
-import { MutualFundTableRow } from '../models/mutualFund-table.model';
+import { MutualFundTableRow } from '../models/mutual-fund-table.model';
 import { DividendTableRow } from '../models/dividend-table.model';
 import { ProfitLossTableRow } from '../models/profit-loss-table.model';
 import { FundTableRow } from '../models/fund-table.model';
+import { StockDashboard } from '../models/stock-dashboard.model';
+import { ProfitLossDashboard } from '../models/profit-loss-dashboard.model';
+import { DividendDashboard } from '../models/dividend-dashboard.model';
+import { FundDashboard } from '../models/fund-dashboard.model';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +74,22 @@ export class DataTransferService {
 
   getCompanyNameDropDowns(): Observable<CompanyNameDropdown[]> {
     return this.http.get<CompanyNameDropdown[]>(this.apiUrl + 'company-dropdowns', { headers: this.headers });
+  }
+
+  getStockDashboard():Observable<StockDashboard>{
+    return this.http.get<StockDashboard>(this.apiUrl+'markets/stock-dashboard',{ headers:this.headers });
+  }
+
+  getFundDashboard():Observable<FundDashboard>{
+    return this.http.get<FundDashboard>(this.apiUrl+'markets/fund-dashboard',{ headers:this.headers });
+  }
+
+  getDividendDashboard():Observable<DividendDashboard>{
+    return this.http.get<DividendDashboard>(this.apiUrl+'markets/dividend-dashboard',{ headers:this.headers });
+  }
+
+  getProfitLossDashboard():Observable<ProfitLossDashboard>{
+    return this.http.get<ProfitLossDashboard>(this.apiUrl+'markets/profit-loss-dashboard',{ headers:this.headers });
   }
 
 }
