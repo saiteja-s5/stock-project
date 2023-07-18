@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { StockFormComponent } from '../stock-form/stock-form.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-stock-modal-button',
@@ -12,12 +12,17 @@ import { StockFormComponent } from '../stock-form/stock-form.component';
 })
 export class StockModalButtonComponent {
 
-  constructor(private matDialog: MatDialog) {
+  modal!: DynamicDialogRef;
+
+  constructor(public dialog: DialogService) {
   }
 
   openStockModal() {
-    this.matDialog.open(StockFormComponent, {
-      disableClose: true
+    this.modal = this.dialog.open(StockFormComponent, {
+      header: 'Add Stock Transaction',
+      width: '60%',
+      maximizable: true,
+      modal: true
     })
   }
 

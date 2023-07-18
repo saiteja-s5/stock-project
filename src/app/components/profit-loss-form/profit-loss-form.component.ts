@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Utility } from 'src/app/utilities/Utility';
+import { Utility } from 'src/app/utilities/utility';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';

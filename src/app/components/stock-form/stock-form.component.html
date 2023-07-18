@@ -1,10 +1,131 @@
 <form [formGroup]="stockForm">
-  <div *ngIf="isLoading">
-    <app-spinner></app-spinner>
+  <div class="flex flex-wrap gap-3 p-fluid">
+    <div class="flex-auto m-2">
+      <label for="stockName" class="block font-bold">Stock Name</label>
+      <p-autoComplete
+        [ngClass]="
+          stockForm.controls['stockName'].touched &&
+          stockForm.controls['stockName'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="stockName"
+        field="companyName"
+        placeholder="Enter the Stock Name"
+        [suggestions]="filteredStocks"
+        [dropdown]="true"
+        [forceSelection]="true"
+        (completeMethod)="filterStock($event)"
+      >
+      </p-autoComplete>
+      <small
+        *ngIf="
+          stockForm.controls['stockName'].touched &&
+          stockForm.controls['stockName'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2">
+      <label for="investmentDate" class="block font-bold"
+        >Investment Date</label
+      >
+      <p-calendar
+        [ngClass]="
+          stockForm.controls['investmentDate'].touched &&
+          stockForm.controls['investmentDate'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="investmentDate"
+        placeholder="Enter Investment Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="startDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          stockForm.controls['investmentDate'].touched &&
+          stockForm.controls['investmentDate'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2">
+      <label for="quantity" class="block font-bold">Quantity</label>
+      <p-inputNumber
+        formControlName="quantity"
+        placeholder="Enter Number of Stocks Bought"
+        [min]="0"
+        [showButtons]="true"
+      ></p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          stockForm.controls['quantity'].touched &&
+          stockForm.controls['quantity'].invalid
+        "
+      >
+        <small *ngIf="stockForm.controls['quantity'].errors?.['required']"
+          >This field is Mandatory</small
+        >
+        <small *ngIf="stockForm.controls['quantity'].errors?.['min']"
+          >Buy Quantity should be atleast
+          {{stockForm.controls['quantity'].errors?.['min'].min }}</small
+        >
+      </div>
+    </div>
+    <div class="flex-auto m-2">
+      <label for="buyPrice" class="block font-bold">Buy Price</label>
+      <p-inputNumber
+        formControlName="buyPrice"
+        placeholder="Enter Buy Price"
+        mode="currency"
+        currency="INR"
+        [showButtons]="true"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="2"
+        [min]="0"
+      >
+      </p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          stockForm.controls['buyPrice'].touched &&
+          stockForm.controls['buyPrice'].invalid
+        "
+      >
+        <div *ngIf="stockForm.controls['buyPrice'].errors?.['required']">
+          This field is Mandatory
+        </div>
+        <div *ngIf="stockForm.controls['buyPrice'].errors?.['min']">
+          Buy Price should be atleast
+          {{stockForm.controls['buyPrice'].errors?.['min'].min }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div *ngIf="!isLoading">
-    <h3 mat-dialog-title>Add Stock Transaction</h3>
-    <mat-dialog-content>
+  <div class="d-flex justify-content-center">
+    <p-button
+      label="Close"
+      styleClass="p-button-raised p-button-danger m-2"
+      (click)="closeModal()"
+    ></p-button>
+    <p-button
+      label="Submit"
+      [loading]="isLoading"
+      (click)="onFormSubmit()"
+      styleClass="p-button-raised m-2"
+    ></p-button>
+  </div>
+</form>
+<!-- 
+  <mat-dialog-content>
       <mat-form-field [style.width.px]="formFieldWidth">
         <mat-label>Stock Name</mat-label>
         <mat-select formControlName="stockName">
@@ -41,7 +162,7 @@
           >This field is Mandatory</mat-error
         >
       </mat-form-field>
-      <br />
+      <br />      
       <mat-form-field [style.width.px]="formFieldWidth">
         <mat-label>Quantity</mat-label>
         <input
@@ -93,8 +214,7 @@
         Submit
       </button>
     </mat-dialog-actions>
-  </div>
-</form>
+ -->
 
 <!-- <div class="form-group">
       <label for="stock-name">Stock Name</label>

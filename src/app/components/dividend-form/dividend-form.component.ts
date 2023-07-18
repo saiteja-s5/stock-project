@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Utility } from 'src/app/utilities/Utility';
+import { Utility } from 'src/app/utilities/utility';
 import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { AgGridModule } from 'ag-grid-angular';
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,15 +15,25 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { AppComponent } from './app.component';
+import { AgGridModule } from 'ag-grid-angular';
+
+import { CardModule } from 'primeng/card';
+import { PanelModule } from 'primeng/panel';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
+
+import { AppRoutingModule } from './app-routing.module';
+
 import { StockFormComponent } from './components/stock-form/stock-form.component';
 import { MutualFundFormComponent } from './components/mutual-fund-form/mutual-fund-form.component';
 import { ProfitLossFormComponent } from './components/profit-loss-form/profit-loss-form.component';
 import { FundFormComponent } from './components/fund-form/fund-form.component';
 import { DividendFormComponent } from './components/dividend-form/dividend-form.component';
-
-import { DataTransferService } from './services/data-transfer.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StockModalButtonComponent } from './components/stock-modal-button/stock-modal-button.component';
 import { MutualModalButtonComponent } from './components/mutual-modal-button/mutual-modal-button.component';
 import { DividendModalButtonComponent } from './components/dividend-modal-button/dividend-modal-button.component';
@@ -36,6 +46,14 @@ import { MutualFundAgGridComponent } from './components/mutual-fund-ag-grid/mutu
 import { FundAgGridComponent } from './components/fund-ag-grid/fund-ag-grid.component';
 import { DividendAgGridComponent } from './components/dividend-ag-grid/dividend-ag-grid.component';
 import { ProfitLossAgGridComponent } from './components/profit-loss-ag-grid/profit-loss-ag-grid.component';
+import { OverallInvestmentCardComponent } from './components/overall-investment-card/overall-investment-card.component';
+import { StockDashboardComponent } from './components/stock-dashboard/stock-dashboard.component';
+
+import { AppComponent } from './app.component';
+
+import { MessageService } from 'primeng/api';
+
+import { DataTransferService } from './services/data-transfer.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +74,9 @@ import { ProfitLossAgGridComponent } from './components/profit-loss-ag-grid/prof
     MutualFundAgGridComponent,
     FundAgGridComponent,
     DividendAgGridComponent,
-    ProfitLossAgGridComponent
+    ProfitLossAgGridComponent,
+    OverallInvestmentCardComponent,
+    StockDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -74,9 +94,18 @@ import { ProfitLossAgGridComponent } from './components/profit-loss-ag-grid/prof
     MatProgressSpinnerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CardModule,
+    PanelModule,
+    TableModule,
+    ButtonModule,
+    AutoCompleteModule,
+    CalendarModule,
+    InputNumberModule,
+    DynamicDialogModule,
+    ToastModule
   ],
-  providers: [DataTransferService],
+  providers: [DataTransferService, DialogService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

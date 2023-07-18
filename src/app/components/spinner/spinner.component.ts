@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Utility } from 'src/app/utilities/Utility';
+import { Utility } from 'src/app/utilities/utility';
 
 @Component({
   selector: 'app-spinner',
