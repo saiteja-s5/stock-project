@@ -24,13 +24,13 @@ export class FundFormComponent {
   ngOnInit() {
     this.fundForm = this.formBuilder.group({
       transactionDate: ['', Validators.required],
-      creditedAmount: ['', [Validators.required, Validators.min(0.01)]],
-      debitedAmount: ['', [Validators.required, Validators.min(0.01)]]
+      creditedAmount: [0],
+      debitedAmount: [0]
     });
   }
 
   onFormSubmit() {
-    if (this.fundForm.valid) {
+    if (this.fundForm.valid && (this.fundForm.value.creditedAmount + this.fundForm.value.debitedAmount != 0)) {
       this.isLoading = true;
       this.fundForm.patchValue({ transactionDate: Utility.formatDate(this.fundForm.value.transactionDate) });
       this.dataTransferService.addFund(this.fundForm.value).subscribe({
