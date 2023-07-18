@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MutualFundFormComponent } from '../mutual-fund-form/mutual-fund-form.component';
-import { MatDialog } from '@angular/material/dialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-mutual-modal-button',
@@ -12,12 +12,17 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class MutualModalButtonComponent {
 
-  constructor(private matDialog: MatDialog) {
+  modal!: DynamicDialogRef;
+
+  constructor(public dialog: DialogService) {
   }
 
   openMutualFundModal() {
-    this.matDialog.open(MutualFundFormComponent, {
-      disableClose: true,
+    this.modal = this.dialog.open(MutualFundFormComponent, {
+      header: 'Add Mutual Fund Transaction',
+      width: '60%',
+      maximizable: true,
+      modal: true
     })
   }
 

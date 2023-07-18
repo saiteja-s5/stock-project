@@ -1,10 +1,195 @@
 <form [formGroup]="profitLossForm">
-  <div *ngIf="isLoading">
-    <app-spinner></app-spinner>
+  <div class="flex flex-wrap gap-3 p-fluid">
+    <div class="flex-auto m-2">
+      <label for="stockName" class="block font-bold">Stock Name</label>
+      <p-autoComplete
+        [ngClass]="
+          profitLossForm.controls['stockName'].touched &&
+          profitLossForm.controls['stockName'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="stockName"
+        field="companyName"
+        placeholder="Enter the Stock Name"
+        [suggestions]="filteredStocks"
+        [dropdown]="true"
+        [forceSelection]="true"
+        (completeMethod)="filterStock($event)"
+      >
+      </p-autoComplete>
+      <small
+        *ngIf="
+          profitLossForm.controls['stockName'].touched &&
+          profitLossForm.controls['stockName'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2">
+      <label for="quantity" class="block font-bold">Quantity</label>
+      <p-inputNumber
+        formControlName="quantity"
+        placeholder="Enter Number of Stocks Bought/Sold"
+        [min]="0"
+        [showButtons]="true"
+      ></p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          profitLossForm.controls['quantity'].touched &&
+          profitLossForm.controls['quantity'].invalid
+        "
+      >
+        <small *ngIf="profitLossForm.controls['quantity'].errors?.['required']"
+          >This field is Mandatory</small
+        >
+        <small *ngIf="profitLossForm.controls['quantity'].errors?.['min']"
+          >Buy/Sell Quantity should be atleast
+          {{profitLossForm.controls['quantity'].errors?.['min'].min }}</small
+        >
+      </div>
+    </div>
+    <div formGroupName="bought">
+      <div class="flex-auto m-2">
+        <label for="boughtDate" class="block font-bold">Bought Date</label>
+        <p-calendar
+          [ngClass]="
+            profitLossForm.get('bought.boughtDate')?.touched &&
+            profitLossForm.get('bought.boughtDate')?.invalid
+              ? 'ng-invalid ng-dirty'
+              : ''
+          "
+          formControlName="boughtDate"
+          placeholder="Enter Bought Date"
+          dateFormat="dd/mm/yy"
+          appendTo="body"
+          [showButtonBar]="true"
+          [showIcon]="true"
+          [minDate]="startDate"
+          [maxDate]="today"
+        ></p-calendar>
+        <small
+          *ngIf="
+            profitLossForm.get('bought.boughtDate')?.touched &&
+            profitLossForm.get('bought.boughtDate')?.invalid
+          "
+          class="error-text"
+          >This field is mandatory</small
+        >
+      </div>
+      <div class="flex-auto m-2">
+        <label for="boughtPrice" class="block font-bold">Bought Price</label>
+        <p-inputNumber
+          formControlName="boughtPrice"
+          placeholder="Enter Bought Price"
+          mode="currency"
+          currency="INR"
+          [showButtons]="true"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="2"
+          [min]="0"
+        >
+        </p-inputNumber>
+        <div
+          class="error-text"
+          *ngIf="
+            profitLossForm.get('bought.boughtPrice')?.touched &&
+            profitLossForm.get('bought.boughtPrice')?.invalid
+          "
+        >
+          <small
+            *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['required']"
+          >
+            This field is Mandatory
+          </small>
+          <small
+            *ngIf="profitLossForm.get('bought.boughtPrice')?.errors?.['min']"
+          >
+            Bought Price should be atleast
+            {{profitLossForm.get('bought.boughtPrice')?.errors?.['min'].min }}
+          </small>
+        </div>
+      </div>
+    </div>
+    <div formGroupName="sold">
+      <div class="flex-auto m-2">
+        <label for="soldDate" class="block font-bold">Sold Date</label>
+        <p-calendar
+          [ngClass]="
+            profitLossForm.get('sold.soldDate')?.touched &&
+            profitLossForm.get('sold.soldDate')?.invalid
+              ? 'ng-invalid ng-dirty'
+              : ''
+          "
+          formControlName="soldDate"
+          placeholder="Enter Sold Date"
+          dateFormat="dd/mm/yy"
+          appendTo="body"
+          [showButtonBar]="true"
+          [showIcon]="true"
+          [minDate]="startDate"
+          [maxDate]="today"
+        ></p-calendar>
+        <small
+          *ngIf="
+            profitLossForm.get('sold.soldDate')?.touched &&
+            profitLossForm.get('sold.soldDate')?.invalid
+          "
+          class="error-text"
+          >This field is mandatory</small
+        >
+      </div>
+      <div class="flex-auto m-2">
+        <label for="soldPrice" class="block font-bold">Sold Price</label>
+        <p-inputNumber
+          formControlName="soldPrice"
+          placeholder="Enter Sold Price"
+          mode="currency"
+          currency="INR"
+          [showButtons]="true"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="2"
+          [min]="0"
+        >
+        </p-inputNumber>
+        <div
+          class="error-text"
+          *ngIf="
+            profitLossForm.get('sold.soldPrice')?.touched &&
+            profitLossForm.get('sold.soldPrice')?.invalid
+          "
+        >
+          <small
+            *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['required']"
+          >
+            This field is Mandatory
+          </small>
+          <small *ngIf="profitLossForm.get('sold.soldPrice')?.errors?.['min']">
+            Sold Price should be atleast
+            {{profitLossForm.get('sold.soldPrice')?.errors?.['min'].min }}
+          </small>
+        </div>
+      </div>
+    </div>
   </div>
-  <div *ngIf="!isLoading">
-    <h3 mat-dialog-title>Add Profit/Loss Transaction</h3>
-    <mat-dialog-content>
+  <div class="d-flex justify-content-center">
+    <p-button
+      label="Close"
+      styleClass="p-button-raised p-button-danger m-2"
+      (click)="closeModal()"
+    ></p-button>
+    <p-button
+      label="Submit"
+      [loading]="isLoading"
+      (click)="onFormSubmit()"
+      styleClass="p-button-raised m-2"
+    ></p-button>
+  </div>
+</form>
+<!-- 
+  <mat-dialog-content>
       <mat-form-field [style.width.px]="formFieldWidth">
         <mat-label>Stock Name</mat-label>
         <mat-select formControlName="stockName">
@@ -157,9 +342,7 @@
         Submit
       </button>
     </mat-dialog-actions>
-  </div>
-</form>
-
+ -->
 <!-- <div class="form-group">
   <label for="stock-name">Stock Name</label>
   <select class="form-control" formControlName="stockName" id="stock-name">

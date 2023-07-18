@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { DividendFormComponent } from '../dividend-form/dividend-form.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-dividend-modal-button',
@@ -12,12 +12,17 @@ import { DividendFormComponent } from '../dividend-form/dividend-form.component'
 })
 export class DividendModalButtonComponent {
 
-  constructor(private matDialog: MatDialog) {
+  modal!: DynamicDialogRef;
+
+  constructor(public dialog: DialogService) {
   }
 
   openDividendModal() {
-    this.matDialog.open(DividendFormComponent, {
-      disableClose: true,
+    this.modal = this.dialog.open(DividendFormComponent, {
+      header: 'Add Dividend Transaction',
+      width: '60%',
+      maximizable: true,
+      modal: true
     })
   }
 

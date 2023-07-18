@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProfitLossFormComponent } from '../profit-loss-form/profit-loss-form.component';
-import { MatDialog } from '@angular/material/dialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-profit-loss-modal-button',
@@ -12,12 +12,17 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ProfitLossModalButtonComponent {
 
-  constructor(private matDialog: MatDialog) {
+  modal!: DynamicDialogRef;
+
+  constructor(public dialog: DialogService) {
   }
 
   openProfitLossModal() {
-    this.matDialog.open(ProfitLossFormComponent, {
-      disableClose: true
+    this.modal = this.dialog.open(ProfitLossFormComponent, {
+      header: 'Add Profit/Loss Transaction',
+      width: '60%',
+      maximizable: true,
+      modal: true
     })
   }
 

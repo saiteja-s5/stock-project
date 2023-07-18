@@ -26,6 +26,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -103,6 +104,7 @@ import { DataTransferService } from './services/data-transfer.service';
     CalendarModule,
     InputNumberModule,
     DynamicDialogModule,
+    DropdownModule,
     ToastModule
   ],
   providers: [DataTransferService, DialogService, MessageService],

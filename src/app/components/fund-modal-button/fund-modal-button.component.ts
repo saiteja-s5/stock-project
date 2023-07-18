@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { FundFormComponent } from '../fund-form/fund-form.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-fund-modal-button',
@@ -12,12 +12,17 @@ import { FundFormComponent } from '../fund-form/fund-form.component';
 })
 export class FundModalButtonComponent {
 
-  constructor(private matDialog: MatDialog) {
+  modal!: DynamicDialogRef;
+
+  constructor(public dialog: DialogService) {
   }
 
   openFundModal() {
-    this.matDialog.open(FundFormComponent, {
-      disableClose: true,
+    this.modal = this.dialog.open(FundFormComponent, {
+      header: 'Add Fund Transaction',
+      width: '60%',
+      maximizable: true,
+      modal: true
     })
   }
 

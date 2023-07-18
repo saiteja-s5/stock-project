@@ -19,6 +19,7 @@ export class StockFormComponent {
   filteredStocks!: CompanyNameDropdown[];
   startDate = Utility.stockStartDate;
   today = Utility.today;
+  formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
   constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private messageService: MessageService, public modal: DynamicDialogRef) {

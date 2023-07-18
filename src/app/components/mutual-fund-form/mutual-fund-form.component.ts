@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utility } from 'src/app/utilities/utility';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
-import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageService } from 'primeng/api';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-mutual-fund-form',
@@ -17,39 +17,51 @@ export class MutualFundFormComponent {
   today = Utility.today;
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
-
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,private snackBar:MatSnackBar) {
-  }
-
   investmentTypes = ['SIP', 'LUMPSUM'];
+
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private messageService: MessageService, public modal: DynamicDialogRef) {
+  }
 
   ngOnInit() {
     this.mutualFundForm = this.formBuilder.group({
       investmentDate: ['', Validators.required],
-      amountAdded: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      amountAdded: ['', [Validators.required, Validators.min(0.01)]],
       investmentType: ['', Validators.required],
-      unitsAlloted: ['', [Validators.required, Validators.min(0.0001), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      nav: ['', [Validators.required, Validators.min(0.0001), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      unitsAlloted: ['', [Validators.required, Validators.min(0.0001)]],
+      nav: ['', [Validators.required, Validators.min(0.0001)]],
     });
   }
 
   onFormSubmit() {
-    this.isLoading = true;
-    console.log(this.mutualFundForm.value)
-    this.mutualFundForm.patchValue({ investmentDate: Utility.formatDate(this.mutualFundForm.value.investmentDate) });
-    console.log(this.mutualFundForm.value)
-    this.dataTransferService.addMutualFund(this.mutualFundForm.value).subscribe(response=>{
-      this.isLoading = false;
-      this.openSnackBar();
-    });
-    this.dataTransferService.getMutualFundsForTable().subscribe(mutualFunds =>
-      console.log(mutualFunds)
-    );
+    if (this.mutualFundForm.valid) {
+      this.isLoading = true;
+      this.mutualFundForm.patchValue({ investmentDate: Utility.formatDate(this.mutualFundForm.value.investmentDate) });
+      this.dataTransferService.addMutualFund(this.mutualFundForm.value).subscribe({
+        next: response => {
+          this.isLoading = false;
+          this.openSnackBar('success', 'Mutual Fund added sucessfully');
+          this.modal.close();
+        },
+        error: () => {
+          this.isLoading = false;
+          this.openSnackBar('error', 'Mutual Fund not added');
+          this.modal.close();
+        }
+      });
+    } else {
+      this.openSnackBar('warn', 'Enter all the fields correctly');
+    }
   }
 
-  openSnackBar() {
-    this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      duration: Utility.snackBarDuration,
+  closeModal() {
+    this.modal.close();
+    this.openSnackBar('warn', 'Last transaction cancelled');
+  }
+
+  openSnackBar(severity: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'global', severity: severity, detail: message
     });
   }
 

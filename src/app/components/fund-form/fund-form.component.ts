@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utility } from 'src/app/utilities/utility';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
-import { SuccessSnackbarComponent } from '../success-snackbar/success-snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-fund-form',
@@ -18,32 +18,48 @@ export class FundFormComponent {
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService,private snackBar:MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private messageService: MessageService, public modal: DynamicDialogRef) {
   }
 
   ngOnInit() {
     this.fundForm = this.formBuilder.group({
       transactionDate: ['', Validators.required],
-      creditedAmount: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      debitedAmount: ['', [Validators.required, Validators.min(0.01), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+      creditedAmount: ['', [Validators.required, Validators.min(0.01)]],
+      debitedAmount: ['', [Validators.required, Validators.min(0.01)]]
     });
   }
 
   onFormSubmit() {
-    this.isLoading = true;
-    this.fundForm.patchValue({ transactionDate: Utility.formatDate(this.fundForm.value.transactionDate) });
-    this.dataTransferService.addFund(this.fundForm.value).subscribe(response=>{
-      this.isLoading = false;
-      this.openSnackBar();
-    });
-    this.dataTransferService.getFundsForTable().subscribe(funds =>
-      console.log(funds)
-    );
+    if (this.fundForm.valid) {
+      this.isLoading = true;
+      this.fundForm.patchValue({ transactionDate: Utility.formatDate(this.fundForm.value.transactionDate) });
+      this.dataTransferService.addFund(this.fundForm.value).subscribe({
+        next: response => {
+          this.isLoading = false;
+          this.openSnackBar('success', 'Fund added sucessfully');
+          this.modal.close();
+        },
+        error: () => {
+          this.isLoading = false;
+          this.openSnackBar('error', 'Fund not added');
+          this.modal.close();
+        }
+      });
+    }
+    else {
+      this.openSnackBar('warn', 'Enter all the fields correctly');
+    }
   }
 
-  openSnackBar() {
-    this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      duration: Utility.snackBarDuration,
+  closeModal() {
+    this.modal.close();
+    this.openSnackBar('warn', 'Last transaction cancelled');
+  }
+
+  openSnackBar(severity: string, message: string) {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'global', severity: severity, detail: message
     });
   }
 

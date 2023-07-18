@@ -1,11 +1,165 @@
 <form [formGroup]="mutualFundForm">
-  <div *ngIf="isLoading">
-    <app-spinner></app-spinner>
+  <div class="flex flex-wrap gap-3 p-fluid">
+    <div class="flex-auto m-2">
+      <label for="investmentDate" class="block font-bold"
+        >Investment Date</label
+      >
+      <p-calendar
+        [ngClass]="
+          mutualFundForm.controls['investmentDate'].touched &&
+          mutualFundForm.controls['investmentDate'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="investmentDate"
+        placeholder="Enter Investment Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="startDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          mutualFundForm.controls['investmentDate'].touched &&
+          mutualFundForm.controls['investmentDate'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2">
+      <label for="amountAdded" class="block font-bold">Amount Added</label>
+      <p-inputNumber
+        formControlName="amountAdded"
+        placeholder="Enter Amount Added"
+        mode="currency"
+        currency="INR"
+        [showButtons]="true"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="2"
+        [min]="0"
+      >
+      </p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          mutualFundForm.controls['amountAdded'].touched &&
+          mutualFundForm.controls['amountAdded'].invalid
+        "
+      >
+        <small
+          *ngIf="mutualFundForm.controls['amountAdded'].errors?.['required']"
+        >
+          This field is Mandatory
+        </small>
+        <small *ngIf="mutualFundForm.controls['amountAdded'].errors?.['min']">
+          Amount added should be atleast
+          {{mutualFundForm.controls['amountAdded'].errors?.['min'].min }}
+        </small>
+      </div>
+    </div>
+    <div class="flex-auto m-2">
+      <label for="investmentType" class="block font-bold"
+        >Investment Type</label
+      >
+      <p-dropdown
+        [ngClass]="
+          mutualFundForm.controls['investmentType'].touched &&
+          mutualFundForm.controls['investmentType'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="investmentType"
+        placeholder="Enter Investment Type"
+        [options]="investmentTypes"
+      >
+      </p-dropdown>
+      <small
+        class="error-text"
+        *ngIf="
+          mutualFundForm.controls['investmentType'].touched &&
+          mutualFundForm.controls['investmentType'].invalid
+        "
+      >
+        This field is Mandatory
+      </small>
+    </div>
+    <div class="flex-auto m-2">
+      <label for="unitsAlloted" class="block font-bold">Units Alloted</label>
+      <p-inputNumber
+        formControlName="unitsAlloted"
+        placeholder="Enter Units Alloted"
+        [showButtons]="true"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="4"
+        [min]="0"
+      >
+      </p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          mutualFundForm.controls['unitsAlloted'].touched &&
+          mutualFundForm.controls['unitsAlloted'].invalid
+        "
+      >
+        <small
+          *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['required']"
+        >
+          This field is Mandatory
+        </small>
+        <small *ngIf="mutualFundForm.controls['unitsAlloted'].errors?.['min']">
+          Units alloted should be atleast
+          {{mutualFundForm.controls['unitsAlloted'].errors?.['min'].min }}
+        </small>
+      </div>
+    </div>
+    <div class="flex-auto m-2">
+      <label for="nav" class="block font-bold">Net Asset Value</label>
+      <p-inputNumber
+        formControlName="nav"
+        placeholder="Enter Net Asset Value"
+        [showButtons]="true"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="4"
+        [min]="0"
+      >
+      </p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          mutualFundForm.controls['nav'].touched &&
+          mutualFundForm.controls['nav'].invalid
+        "
+      >
+        <small *ngIf="mutualFundForm.controls['nav'].errors?.['required']">
+          This field is Mandatory
+        </small>
+        <small *ngIf="mutualFundForm.controls['nav'].errors?.['min']">
+          NAV should be atleast
+          {{mutualFundForm.controls['nav'].errors?.['min'].min }}
+        </small>
+      </div>
+    </div>
   </div>
-  <div *ngIf="!isLoading">
-    <div class="form-container">
-      <h3 mat-dialog-title>Add Mutual Fund Transaction</h3>
-      <mat-dialog-content>
+  <div class="d-flex justify-content-center">
+    <p-button
+      label="Close"
+      styleClass="p-button-raised p-button-danger m-2"
+      (click)="closeModal()"
+    ></p-button>
+    <p-button
+      label="Submit"
+      [loading]="isLoading"
+      (click)="onFormSubmit()"
+      styleClass="p-button-raised m-2"
+    ></p-button>
+  </div>
+</form>
+
+<!-- 
+<mat-dialog-content>
         <mat-form-field [style.width.px]="formFieldWidth">
           <mat-label>Investment Date</mat-label>
           <input
@@ -130,10 +284,7 @@
           Submit
         </button>
       </mat-dialog-actions>
-    </div>
-  </div>
-</form>
-
+ -->
 <!-- 
     <div class="form-group">
       <label for="investment-date">Investment Date</label>

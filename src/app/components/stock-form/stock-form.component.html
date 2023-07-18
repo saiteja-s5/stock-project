@@ -100,13 +100,13 @@
           stockForm.controls['buyPrice'].invalid
         "
       >
-        <div *ngIf="stockForm.controls['buyPrice'].errors?.['required']">
+        <small *ngIf="stockForm.controls['buyPrice'].errors?.['required']">
           This field is Mandatory
-        </div>
-        <div *ngIf="stockForm.controls['buyPrice'].errors?.['min']">
+        </small>
+        <small *ngIf="stockForm.controls['buyPrice'].errors?.['min']">
           Buy Price should be atleast
           {{stockForm.controls['buyPrice'].errors?.['min'].min }}
-        </div>
+        </small>
       </div>
     </div>
   </div>

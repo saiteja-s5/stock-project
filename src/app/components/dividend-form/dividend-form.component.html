@@ -1,10 +1,110 @@
 <form [formGroup]="dividendForm">
-  <div *ngIf="isLoading">
-    <app-spinner></app-spinner>
+  <div class="flex flex-wrap gap-3 p-fluid">
+    <div class="flex-auto m-2">
+      <label for="companyName" class="block font-bold">Company Name</label>
+      <p-autoComplete
+        [ngClass]="
+          dividendForm.controls['companyName'].touched &&
+          dividendForm.controls['companyName'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="companyName"
+        field="companyName"
+        placeholder="Enter the Company Name"
+        [suggestions]="filteredCompanies"
+        [dropdown]="true"
+        [forceSelection]="true"
+        (completeMethod)="filterCompany($event)"
+      >
+      </p-autoComplete>
+      <small
+        *ngIf="
+          dividendForm.controls['companyName'].touched &&
+          dividendForm.controls['companyName'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2">
+      <label for="creditedDate" class="block font-bold">Credited Date</label>
+      <p-calendar
+        [ngClass]="
+          dividendForm.controls['creditedDate'].touched &&
+          dividendForm.controls['creditedDate'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="creditedDate"
+        placeholder="Enter Credited Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="startDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          dividendForm.controls['creditedDate'].touched &&
+          dividendForm.controls['creditedDate'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2">
+      <label for="creditedAmount" class="block font-bold"
+        >Credited Amount</label
+      >
+      <p-inputNumber
+        formControlName="creditedAmount"
+        placeholder="Enter Credited Amount"
+        mode="currency"
+        currency="INR"
+        [showButtons]="true"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="2"
+        [min]="0"
+      >
+      </p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          dividendForm.controls['creditedAmount'].touched &&
+          dividendForm.controls['creditedAmount'].invalid
+        "
+      >
+        <small
+          *ngIf="dividendForm.controls['creditedAmount'].errors?.['required']"
+        >
+          This field is Mandatory
+        </small>
+        <small *ngIf="dividendForm.controls['creditedAmount'].errors?.['min']">
+          Credited Amount should be atleast
+          {{dividendForm.controls['creditedAmount'].errors?.['min'].min }}
+        </small>
+      </div>
+    </div>
   </div>
-  <div *ngIf="!isLoading">
-    <h3 mat-dialog-title>Add Dividend Transaction</h3>
-    <mat-dialog-content>
+  <div class="d-flex justify-content-center">
+    <p-button
+      label="Close"
+      styleClass="p-button-raised p-button-danger m-2"
+      (click)="closeModal()"
+    ></p-button>
+    <p-button
+      label="Submit"
+      [loading]="isLoading"
+      (click)="onFormSubmit()"
+      styleClass="p-button-raised m-2"
+    ></p-button>
+  </div>
+</form>
+
+<!-- 
+   <mat-dialog-content>
       <mat-form-field [style.width.px]="formFieldWidth">
         <mat-label>Company Name</mat-label>
         <mat-select formControlName="companyName">
@@ -83,9 +183,7 @@
         Submit
       </button>
     </mat-dialog-actions>
-  </div>
-</form>
-
+ -->
 <!-- <div class="form-group">
   <label for="company-name">Company Name</label>
   <select class="form-control" formControlName="companyName" id="company-name">
