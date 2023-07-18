@@ -3,7 +3,7 @@ export const Utility = {
     today: new Date(),
     stockStartDate: new Date("2021-01-18"),
     mutualFundStartDate: new Date("2021-08-14"),
-    dividendStartDate:new Date("2021-01-18"),
+    dividendStartDate:new Date("2021-03-10"),
     fundStartDate:new Date("2021-01-18"),
     soldStartDate:new Date("2021-01-18"),
     formFieldWidth: 400,

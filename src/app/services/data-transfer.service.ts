@@ -21,6 +21,7 @@ import { StockDashboard } from '../models/stock-dashboard.model';
 import { ProfitLossDashboard } from '../models/profit-loss-dashboard.model';
 import { DividendDashboard } from '../models/dividend-dashboard.model';
 import { FundDashboard } from '../models/fund-dashboard.model';
+import { MiscellaneousRecord } from '../models/miscellaneous-record.model';
 
 @Injectable({
   providedIn: 'root'
@@ -76,20 +77,28 @@ export class DataTransferService {
     return this.http.get<CompanyNameDropdown[]>(this.apiUrl + 'company-dropdowns', { headers: this.headers });
   }
 
-  getStockDashboard():Observable<StockDashboard>{
-    return this.http.get<StockDashboard>(this.apiUrl+'markets/stock-dashboard',{ headers:this.headers });
+  getStockDashboard(): Observable<StockDashboard> {
+    return this.http.get<StockDashboard>(this.apiUrl + 'markets/stock-dashboard', { headers: this.headers });
   }
 
-  getFundDashboard():Observable<FundDashboard>{
-    return this.http.get<FundDashboard>(this.apiUrl+'markets/fund-dashboard',{ headers:this.headers });
+  getFundDashboard(): Observable<FundDashboard> {
+    return this.http.get<FundDashboard>(this.apiUrl + 'markets/fund-dashboard', { headers: this.headers });
   }
 
-  getDividendDashboard():Observable<DividendDashboard>{
-    return this.http.get<DividendDashboard>(this.apiUrl+'markets/dividend-dashboard',{ headers:this.headers });
+  getDividendDashboard(): Observable<DividendDashboard> {
+    return this.http.get<DividendDashboard>(this.apiUrl + 'markets/dividend-dashboard', { headers: this.headers });
   }
 
-  getProfitLossDashboard():Observable<ProfitLossDashboard>{
-    return this.http.get<ProfitLossDashboard>(this.apiUrl+'markets/profit-loss-dashboard',{ headers:this.headers });
+  getProfitLossDashboard(): Observable<ProfitLossDashboard> {
+    return this.http.get<ProfitLossDashboard>(this.apiUrl + 'markets/profit-loss-dashboard', { headers: this.headers });
+  }
+
+  getMiscellaneousRecords(): Observable<MiscellaneousRecord> {
+    return this.http.get<MiscellaneousRecord>(this.apiUrl + 'misc-records', { headers: this.headers });
+  }
+
+  updateMiscellaneousRecord(misc: MiscellaneousRecord): Observable<MiscellaneousRecord> {
+    return this.http.put<MiscellaneousRecord>(this.apiUrl + 'misc-records', misc, { headers: this.headers })
   }
 
 }

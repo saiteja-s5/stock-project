@@ -27,7 +27,9 @@
             <tr>
                 <td>Table Updated On</td>
                 <td>{{ stockData.stockTableUpdatedOn }}</td>
-                <td><p-button label="Update" styleClass="p-button-rounded p-button-raised"></p-button></td>
+                <td><p-button label="Update" styleClass="p-button-rounded p-button-raised"
+                    (click)="updateDate()"
+                    ></p-button></td>
             </tr>
     </table>
 </p-panel>

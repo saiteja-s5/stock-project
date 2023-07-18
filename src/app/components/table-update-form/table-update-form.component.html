@@ -1,0 +1,226 @@
+<form [formGroup]="tableForm">
+  <div class="flex flex-wrap gap-3 p-fluid">
+    <div class="flex-auto m-2" *ngIf="isCashUpdate">
+      <label for="cashAvailableForInvesting" class="block font-bold"
+        >Cash Available for Investing</label
+      >
+      <p-inputNumber
+        formControlName="cashAvailableForInvesting"
+        placeholder="Enter Cash in Demat Account"
+        mode="currency"
+        currency="INR"
+        [showButtons]="true"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="2"
+        [min]="0"
+      >
+      </p-inputNumber>
+      <div
+        class="error-text"
+        *ngIf="
+          tableForm.controls['cashAvailableForInvesting'].touched &&
+          tableForm.controls['cashAvailableForInvesting'].invalid
+        "
+      >
+        <small
+          *ngIf="tableForm.controls['cashAvailableForInvesting'].errors?.['required']"
+        >
+          This field is Mandatory
+        </small>
+        <small
+          *ngIf="tableForm.controls['cashAvailableForInvesting'].errors?.['min']"
+        >
+          Entered Cash should be atleast
+          {{tableForm.controls['cashAvailableForInvesting'].errors?.['min'].min }}
+        </small>
+      </div>
+    </div>
+    <div class="flex-auto m-2" *ngIf="isStockUpdate">
+      <label for="stockTableUpdatedOn" class="block font-bold"
+        >Stock Table Updated On</label
+      >
+      <p-calendar
+        [ngClass]="
+          tableForm.controls['stockTableUpdatedOn'].touched &&
+          tableForm.controls['stockTableUpdatedOn'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="stockTableUpdatedOn"
+        placeholder="Enter Stock Table Updated Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="lastUpdatedDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          tableForm.controls['stockTableUpdatedOn'].touched &&
+          tableForm.controls['stockTableUpdatedOn'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2" *ngIf="isMutualFundUpdate">
+      <label for="mutualFundTableUpdatedOn" class="block font-bold"
+        >Mutual Fund Table Updated On</label
+      >
+      <p-calendar
+        [ngClass]="
+          tableForm.controls['mutualFundTableUpdatedOn'].touched &&
+          tableForm.controls['mutualFundTableUpdatedOn'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="mutualFundTableUpdatedOn"
+        placeholder="Enter Mutual Fund Table Updated Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="lastUpdatedDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          tableForm.controls['mutualFundTableUpdatedOn'].touched &&
+          tableForm.controls['mutualFundTableUpdatedOn'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2" *ngIf="isFundUpdate">
+      <label for="fundTableUpdatedOn" class="block font-bold"
+        >Fund Table Updated On</label
+      >
+      <p-calendar
+        [ngClass]="
+          tableForm.controls['fundTableUpdatedOn'].touched &&
+          tableForm.controls['fundTableUpdatedOn'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="fundTableUpdatedOn"
+        placeholder="Enter Fund Table Updated Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="lastUpdatedDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          tableForm.controls['fundTableUpdatedOn'].touched &&
+          tableForm.controls['fundTableUpdatedOn'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2" *ngIf="isDividendUpdate">
+      <label for="dividendTableUpdatedOn" class="block font-bold"
+        >Dividend Table Updated On</label
+      >
+      <p-calendar
+        [ngClass]="
+          tableForm.controls['dividendTableUpdatedOn'].touched &&
+          tableForm.controls['dividendTableUpdatedOn'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="dividendTableUpdatedOn"
+        placeholder="Enter Dividend Table Updated Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="lastUpdatedDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          tableForm.controls['dividendTableUpdatedOn'].touched &&
+          tableForm.controls['dividendTableUpdatedOn'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2" *ngIf="isProfitLossUpdate">
+      <label for="profitLossTableUpdatedOn" class="block font-bold"
+        >Profit/Loss Table Updated On</label
+      >
+      <p-calendar
+        [ngClass]="
+          tableForm.controls['profitLossTableUpdatedOn'].touched &&
+          tableForm.controls['profitLossTableUpdatedOn'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="profitLossTableUpdatedOn"
+        placeholder="Enter Profit/Loss Table Updated Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="lastUpdatedDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          tableForm.controls['profitLossTableUpdatedOn'].touched &&
+          tableForm.controls['profitLossTableUpdatedOn'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+    <div class="flex-auto m-2" *ngIf="isGoldUpdate">
+      <label for="goldTableUpdatedOn" class="block font-bold"
+        >Gold Table Updated On</label
+      >
+      <p-calendar
+        [ngClass]="
+          tableForm.controls['goldTableUpdatedOn'].touched &&
+          tableForm.controls['goldTableUpdatedOn'].invalid
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
+        formControlName="goldTableUpdatedOn"
+        placeholder="Enter Gold Table Updated Date"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
+        [showButtonBar]="true"
+        [showIcon]="true"
+        [minDate]="lastUpdatedDate"
+        [maxDate]="today"
+      ></p-calendar>
+      <small
+        *ngIf="
+          tableForm.controls['goldTableUpdatedOn'].touched &&
+          tableForm.controls['goldTableUpdatedOn'].invalid
+        "
+        class="error-text"
+        >This field is mandatory</small
+      >
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <p-button
+      label="Close"
+      styleClass="p-button-raised p-button-danger m-2"
+      (click)="closeModal()"
+    ></p-button>
+    <p-button
+      label="Update"
+      [loading]="isLoading"
+      (click)="onFormSubmit()"
+      styleClass="p-button-raised m-2"
+    ></p-button>
+  </div>
+</form>

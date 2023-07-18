@@ -49,10 +49,11 @@ import { DividendAgGridComponent } from './components/dividend-ag-grid/dividend-
 import { ProfitLossAgGridComponent } from './components/profit-loss-ag-grid/profit-loss-ag-grid.component';
 import { OverallInvestmentCardComponent } from './components/overall-investment-card/overall-investment-card.component';
 import { StockDashboardComponent } from './components/stock-dashboard/stock-dashboard.component';
+import { TableUpdateFormComponent } from './components/table-update-form/table-update-form.component';
 
 import { AppComponent } from './app.component';
 
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { DataTransferService } from './services/data-transfer.service';
 
@@ -77,7 +78,8 @@ import { DataTransferService } from './services/data-transfer.service';
     DividendAgGridComponent,
     ProfitLossAgGridComponent,
     OverallInvestmentCardComponent,
-    StockDashboardComponent
+    StockDashboardComponent,
+    TableUpdateFormComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +109,7 @@ import { DataTransferService } from './services/data-transfer.service';
     DropdownModule,
     ToastModule
   ],
-  providers: [DataTransferService, DialogService, MessageService],
+  providers: [DataTransferService, DialogService, MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
