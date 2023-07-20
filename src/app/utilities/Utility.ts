@@ -6,6 +6,7 @@ export const Utility = {
     dividendStartDate:new Date("2021-03-10"),
     fundStartDate:new Date("2021-01-18"),
     soldStartDate:new Date("2021-01-18"),
+    miscTableKey: 'MASTER-KEY', 
     formFieldWidth: 400,
     spinnerDiameter : 400,
     spinnerStrokeWidth : 10,

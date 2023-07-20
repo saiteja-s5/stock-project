@@ -1,5 +1,6 @@
 <form [formGroup]="tableForm">
   <div class="flex flex-wrap gap-3 p-fluid">
+    <div formControlName="miscId" ngDefaultControl></div>
     <div class="flex-auto m-2" *ngIf="isCashUpdate">
       <label for="cashAvailableForInvesting" class="block font-bold"
         >Cash Available for Investing</label
@@ -52,6 +53,7 @@
         appendTo="body"
         [showButtonBar]="true"
         [showIcon]="true"
+        [defaultDate]="lastUpdatedDate"
         [minDate]="lastUpdatedDate"
         [maxDate]="today"
       ></p-calendar>
@@ -81,6 +83,7 @@
         appendTo="body"
         [showButtonBar]="true"
         [showIcon]="true"
+        [defaultDate]="lastUpdatedDate"
         [minDate]="lastUpdatedDate"
         [maxDate]="today"
       ></p-calendar>
@@ -110,6 +113,7 @@
         appendTo="body"
         [showButtonBar]="true"
         [showIcon]="true"
+        [defaultDate]="lastUpdatedDate"
         [minDate]="lastUpdatedDate"
         [maxDate]="today"
       ></p-calendar>
@@ -139,6 +143,7 @@
         appendTo="body"
         [showButtonBar]="true"
         [showIcon]="true"
+        [defaultDate]="lastUpdatedDate"
         [minDate]="lastUpdatedDate"
         [maxDate]="today"
       ></p-calendar>
@@ -168,6 +173,7 @@
         appendTo="body"
         [showButtonBar]="true"
         [showIcon]="true"
+        [defaultDate]="lastUpdatedDate"
         [minDate]="lastUpdatedDate"
         [maxDate]="today"
       ></p-calendar>
@@ -197,6 +203,7 @@
         appendTo="body"
         [showButtonBar]="true"
         [showIcon]="true"
+        [defaultDate]="lastUpdatedDate"
         [minDate]="lastUpdatedDate"
         [maxDate]="today"
       ></p-calendar>

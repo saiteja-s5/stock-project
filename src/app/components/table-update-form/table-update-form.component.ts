@@ -16,6 +16,7 @@ export class TableUpdateFormComponent {
   tableForm!: FormGroup;
   miscRecords!: MiscellaneousRecord;
   lastUpdatedDate!: Date;
+  cashAvailablePreviously = 0;
   isCashUpdate = false;
   isStockUpdate = false;
   isMutualFundUpdate = false;
@@ -42,20 +43,22 @@ export class TableUpdateFormComponent {
     this.dataTransferService.getMiscellaneousRecords().subscribe({
       next: record => {
         this.miscRecords = record;
-        this.isLoading = false;
-        if (this.isStockUpdate) {
-          this.lastUpdatedDate = this.miscRecords.stockTableUpdatedOn;
+        if (this.isCashUpdate) {
+          this.cashAvailablePreviously = this.miscRecords.cashAvailableForInvesting;
+        } else if (this.isStockUpdate) {
+          this.lastUpdatedDate = new Date(this.miscRecords.stockTableUpdatedOn);
         } else if (this.isMutualFundUpdate) {
-          this.lastUpdatedDate = this.miscRecords.mutualFundTableUpdatedOn;
+          this.lastUpdatedDate = new Date(this.miscRecords.mutualFundTableUpdatedOn);
         } else if (this.isFundUpdate) {
-          this.lastUpdatedDate = this.miscRecords.fundTableUpdatedOn;
+          this.lastUpdatedDate = new Date(this.miscRecords.fundTableUpdatedOn);
         } else if (this.isDividendUpdate) {
-          this.lastUpdatedDate = this.miscRecords.dividendTableUpdatedOn;
+          this.lastUpdatedDate = new Date(this.miscRecords.dividendTableUpdatedOn);
         } else if (this.isProfitLossUpdate) {
-          this.lastUpdatedDate = this.miscRecords.profitLossTableUpdatedOn;
+          this.lastUpdatedDate = new Date(this.miscRecords.profitLossTableUpdatedOn);
         } else if (this.isGoldUpdate) {
-          this.lastUpdatedDate = this.miscRecords.goldTableUpdatedOn;
+          this.lastUpdatedDate = new Date(this.miscRecords.goldTableUpdatedOn);
         }
+        this.isLoading = false;
       },
       error: () => {
         this.isLoading = false;
@@ -63,50 +66,64 @@ export class TableUpdateFormComponent {
       }
     });
     this.tableForm = this.formBuilder.group({
-      cashAvailableForInvesting: [''],
-      stockTableUpdatedOn: [this.lastUpdatedDate],
-      mutualFundTableUpdatedOn: [this.lastUpdatedDate],
-      fundTableUpdatedOn: [this.lastUpdatedDate],
-      dividendTableUpdatedOn: [this.lastUpdatedDate],
-      profitLossTableUpdatedOn: [this.lastUpdatedDate],
-      goldTableUpdatedOn: [this.lastUpdatedDate],
+      miscId: [Utility.miscTableKey],
+      cashAvailableForInvesting: [this.cashAvailablePreviously],
+      stockTableUpdatedOn: [],
+      mutualFundTableUpdatedOn: [],
+      fundTableUpdatedOn: [],
+      dividendTableUpdatedOn: [],
+      profitLossTableUpdatedOn: [],
+      goldTableUpdatedOn: [],
     });
   }
 
   onFormSubmit() {
-    if (this.isCashUpdate && this.tableForm.value.availableForInvestment <= 0) {
+    if (this.isCashUpdate && this.tableForm.value.cashAvailableForInvesting <= 0) {
       this.openSnackBar('warn', 'Cash Available entered is invalid');
     } else {
       this.isLoading = true;
-      this.tableForm.setValue(this.miscRecords);
       if (this.isCashUpdate) {
+        const tempCash = this.tableForm.value.cashAvailableForInvesting;
+        this.tableForm.setValue(this.miscRecords);
         this.tableForm.patchValue({
-          cashAvailableForInvesting: this.tableForm.value.cashAvailableForInvesting
+          cashAvailableForInvesting: tempCash
         });
       }
       else if (this.isStockUpdate) {
+        const tempStockDate = this.tableForm.value.stockTableUpdatedOn;
+        this.tableForm.setValue(this.miscRecords);
         this.tableForm.patchValue({
-          stockTableUpdatedOn: Utility.formatDate(this.tableForm.value.stockTableUpdatedOn)
+          stockTableUpdatedOn: Utility.formatDate(tempStockDate)
         });
       } else if (this.isMutualFundUpdate) {
+        const tempMutualFundDate = this.tableForm.value.mutualFundTableUpdatedOn;
+        this.tableForm.setValue(this.miscRecords);
         this.tableForm.patchValue({
-          mutualFundTableUpdatedOn: Utility.formatDate(this.tableForm.value.mutualFundTableUpdatedOn)
+          mutualFundTableUpdatedOn: Utility.formatDate(tempMutualFundDate)
         });
       } else if (this.isFundUpdate) {
+        const tempFundDate = this.tableForm.value.fundTableUpdatedOn;
+        this.tableForm.setValue(this.miscRecords);
         this.tableForm.patchValue({
-          fundTableUpdatedOn: Utility.formatDate(this.tableForm.value.fundTableUpdatedOn)
+          fundTableUpdatedOn: Utility.formatDate(tempFundDate)
         });
       } else if (this.isDividendUpdate) {
+        const tempDividendDate = this.tableForm.value.dividendTableUpdatedOn;
+        this.tableForm.setValue(this.miscRecords);
         this.tableForm.patchValue({
-          dividendTableUpdatedOn: Utility.formatDate(this.tableForm.value.dividendTableUpdatedOn)
+          dividendTableUpdatedOn: Utility.formatDate(tempDividendDate)
         });
       } else if (this.isProfitLossUpdate) {
+        const tempProfitLossDate = this.tableForm.value.profitLossTableUpdatedOn;
+        this.tableForm.setValue(this.miscRecords);
         this.tableForm.patchValue({
-          profitLossTableUpdatedOn: Utility.formatDate(this.tableForm.value.profitLossTableUpdatedOn)
+          profitLossTableUpdatedOn: Utility.formatDate(tempProfitLossDate)
         });
       } else if (this.isGoldUpdate) {
+        const tempGoldDate = this.tableForm.value.goldTableUpdatedOn;
+        this.tableForm.setValue(this.miscRecords);
         this.tableForm.patchValue({
-          goldTableUpdatedOn: Utility.formatDate(this.tableForm.value.goldTableUpdatedOn)
+          goldTableUpdatedOn: Utility.formatDate(tempGoldDate)
         });
       }
       this.dataTransferService.updateMiscellaneousRecord(this.tableForm.value).subscribe({
