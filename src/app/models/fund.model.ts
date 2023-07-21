@@ -1,6 +1,6 @@
-export interface Fund{
-    fundId:number;
-    transactionDate:Date;
-    creditedAmount:number;
-    debitedAmount:number;
+export interface Fund {
+    fundId: number;
+    transactionDate: Date;
+    creditedAmount: number;
+    debitedAmount: number;
 }

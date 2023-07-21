@@ -11,19 +11,19 @@ import { TableUpdateFormComponent } from '../table-update-form/table-update-form
 })
 export class StockDashboardComponent {
 
-  stockData! : StockDashboard;
+  stockData!: StockDashboard;
   modal!: DynamicDialogRef;
 
-  constructor(private dataService:DataTransferService,public dialog: DialogService){
+  constructor(private dataService: DataTransferService, public dialog: DialogService) {
     this.dataService.getStockDashboard().subscribe(stockData => {
       this.stockData = stockData;
     });
   }
 
-  updateDate(){
+  updateDate() {
     this.modal = this.dialog.open(TableUpdateFormComponent, {
       data: {
-        isStockUpdate:true
+        isStockUpdate: true
       },
       header: 'Update Table',
       width: '60%',

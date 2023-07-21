@@ -1,4 +1,4 @@
-export interface CompanyNameDropdown{
-    companySymbol:string;
-    companyName:string;
+export interface CompanyNameDropdown {
+    companySymbol: string;
+    companyName: string;
 }

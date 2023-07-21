@@ -1,6 +1,6 @@
-export interface FundTableRow{
-    transactionDate:Date;
-    creditedAmount:number;
-    debitedAmount:number;
-    cashIn:number;
+export interface FundTableRow {
+    transactionDate: Date;
+    creditedAmount: number;
+    debitedAmount: number;
+    cashIn: number;
 }

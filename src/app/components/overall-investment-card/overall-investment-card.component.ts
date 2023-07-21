@@ -7,23 +7,23 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
   styleUrls: ['./overall-investment-card.component.css']
 })
 
-export class OverallInvestmentCardComponent implements OnInit{
+export class OverallInvestmentCardComponent implements OnInit {
 
-  color! : string;
+  color!: string;
   overallCurrentValue = 0
 
-  constructor(private dataTransferService: DataTransferService){
+  constructor(private dataTransferService: DataTransferService) {
     this.dataTransferService.getStockDashboard().subscribe(stockSummary => {
-      this.color = stockSummary.stockCurrentValue > 0 ? 'green' : 'red' ;
+      this.color = stockSummary.stockCurrentValue > 0 ? 'green' : 'red';
       this.overallCurrentValue = stockSummary.stockInvestmentValue;
     });
   }
-  ngOnInit(): void {    
+  ngOnInit(): void {
   }
 
 
-  
 
 
-  
+
+
 }

@@ -38,12 +38,12 @@ export class ProfitLossAgGridComponent {
     { field: 'percentReturnperMonth' }
   ];
 
-  onGridReady(params:GridReadyEvent<ProfitLossTableRow>){
+  onGridReady(params: GridReadyEvent<ProfitLossTableRow>) {
     this.gridColumnApi = params.columnApi;
     const allColumnIds: string[] = [];
     this.gridColumnApi.getColumns()!.forEach((column) => {
       allColumnIds.push(column.getId());
     });
-    this.gridColumnApi.autoSizeColumns(allColumnIds,false);
+    this.gridColumnApi.autoSizeColumns(allColumnIds, false);
   }
 }

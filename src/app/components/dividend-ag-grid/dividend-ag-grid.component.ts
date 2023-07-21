@@ -28,13 +28,13 @@ export class DividendAgGridComponent {
     { field: 'creditedDate' },
     { field: 'creditedAmount' }
   ];
- 
-  onGridReady(params:GridReadyEvent<DividendTableRow>){
+
+  onGridReady(params: GridReadyEvent<DividendTableRow>) {
     this.gridColumnApi = params.columnApi;
     const allColumnIds: string[] = [];
     this.gridColumnApi.getColumns()!.forEach((column) => {
       allColumnIds.push(column.getId());
     });
-    this.gridColumnApi.autoSizeColumns(allColumnIds,false);
+    this.gridColumnApi.autoSizeColumns(allColumnIds, false);
   }
 }

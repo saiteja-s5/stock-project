@@ -35,13 +35,13 @@ export class StockAgGridComponent {
     { field: 'twoPerTarget' }
   ];
 
-  onGridReady(params:GridReadyEvent<StockTableRow>){
+  onGridReady(params: GridReadyEvent<StockTableRow>) {
     this.gridColumnApi = params.columnApi;
     const allColumnIds: string[] = [];
     this.gridColumnApi.getColumns()!.forEach((column) => {
       allColumnIds.push(column.getId());
     });
-    this.gridColumnApi.autoSizeColumns(allColumnIds,false);
+    this.gridColumnApi.autoSizeColumns(allColumnIds, false);
   }
 
 }

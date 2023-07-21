@@ -1,5 +1,5 @@
-export interface DividendTableRow{
-    companyName:string;
-    creditedDate:Date;
-    creditedAmount:number;
+export interface DividendTableRow {
+    companyName: string;
+    creditedDate: Date;
+    creditedAmount: number;
 }

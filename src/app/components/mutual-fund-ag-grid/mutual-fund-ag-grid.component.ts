@@ -10,7 +10,7 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
   styleUrls: ['./mutual-fund-ag-grid.component.css']
 })
 export class MutualFundAgGridComponent {
-  
+
   constructor(private dataService: DataTransferService) { }
 
   private gridColumnApi!: ColumnApi;
@@ -34,12 +34,12 @@ export class MutualFundAgGridComponent {
     { field: 'overallReturnPer' }
   ];
 
-  onGridReady(params:GridReadyEvent<MutualFundTableRow>){
+  onGridReady(params: GridReadyEvent<MutualFundTableRow>) {
     this.gridColumnApi = params.columnApi;
     const allColumnIds: string[] = [];
     this.gridColumnApi.getColumns()!.forEach((column) => {
       allColumnIds.push(column.getId());
     });
-    this.gridColumnApi.autoSizeColumns(allColumnIds,false);
+    this.gridColumnApi.autoSizeColumns(allColumnIds, false);
   }
 }

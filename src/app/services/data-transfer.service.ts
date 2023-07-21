@@ -54,7 +54,7 @@ export class DataTransferService {
   }
 
   getStocksForTable(): Observable<StockTableRow[]> {
-    return this.http.get<StockTableRow[]>(this.apiUrl + 'stocks', { headers: this.headers });
+    return this.http.get<StockTableRow[]>(this.apiUrl + 'stocks/table', { headers: this.headers });
   }
 
   getMutualFundsForTable(): Observable<MutualFundTableRow[]> {

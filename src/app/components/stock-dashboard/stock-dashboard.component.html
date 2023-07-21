@@ -1,35 +1,39 @@
 <p-panel header="Stock Dashboard" [toggleable]="true">
-    <table>
-            <tr>
-                <td>Stock Investment Value</td>
-                <td>{{ stockData.stockInvestmentValue }}</td>
-                <td>&#8377;</td>
-            </tr>
-            <tr>
-                <td>Stock Current Value</td>
-                <td>{{ stockData.stockCurrentValue }}</td>
-                <td>&#8377;</td>
-            </tr>
-            <tr>
-                <td>Stock Current Return</td>
-                <td>{{ stockData.stockCurrentReturn }}</td>
-                <td>&#8377;</td>
-            </tr>
-            <tr>
-                <td>Stock Current Return Percent</td>
-                <td>{{ stockData.stockCurrentReturnPercent }}</td>
-                <td>%</td>
-            </tr>
-            <tr>
-                <td>Last Transaction On</td>
-                <td>{{ stockData.stockLastTransactionOn }}</td>
-            </tr>
-            <tr>
-                <td>Table Updated On</td>
-                <td>{{ stockData.stockTableUpdatedOn }}</td>
-                <td><p-button label="Update" styleClass="p-button-rounded p-button-raised"
-                    (click)="updateDate()"
-                    ></p-button></td>
-            </tr>
-    </table>
+  <table>
+    <tr>
+      <td>Stock Investment Value</td>
+      <td>{{ stockData.stockInvestmentValue }}</td>
+      <td>&#8377;</td>
+    </tr>
+    <tr>
+      <td>Stock Current Value</td>
+      <td>{{ stockData.stockCurrentValue }}</td>
+      <td>&#8377;</td>
+    </tr>
+    <tr>
+      <td>Stock Current Return</td>
+      <td>{{ stockData.stockCurrentReturn }}</td>
+      <td>&#8377;</td>
+    </tr>
+    <tr>
+      <td>Stock Current Return Percent</td>
+      <td>{{ stockData.stockCurrentReturnPercent }}</td>
+      <td>%</td>
+    </tr>
+    <tr>
+      <td>Last Transaction On</td>
+      <td>{{ stockData.stockLastTransactionOn }}</td>
+    </tr>
+    <tr>
+      <td>Table Updated On</td>
+      <td>{{ stockData.stockTableUpdatedOn }}</td>
+      <td>
+        <p-button
+          label="Update"
+          styleClass="p-button-rounded p-button-raised"
+          (click)="updateDate()"
+        ></p-button>
+      </td>
+    </tr>
+  </table>
 </p-panel>

@@ -11,5 +11,5 @@ import { Utility } from 'src/app/utilities/utility';
 })
 export class SpinnerComponent {
   spinnerDiameter = Utility.spinnerDiameter;
-  spinnerStrokeWidth = Utility.spinnerStrokeWidth; 
+  spinnerStrokeWidth = Utility.spinnerStrokeWidth;
 }
