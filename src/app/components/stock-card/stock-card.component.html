@@ -1,0 +1,24 @@
+<p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
+<div class="grid-container" *ngIf="!isLoading">
+  <div class="grid-item heading">Stock</div>
+  <div class="grid-item icon">
+    <i class="pi pi-chart-line" style="font-size: 2rem; color: steelblue"></i>
+  </div>
+  <div class="grid-item current-value">
+    &#8377;
+    <span [ngClass]="stockData.stockCurrentReturn > 0 ? 'green' : 'red'">{{
+      formatNumber(stockData.stockCurrentValue)
+    }}</span>
+  </div>
+  <div class="grid-item current-return-percent">
+    <span [ngClass]="stockData.stockCurrentReturn > 0 ? 'green' : 'red'">
+      {{ formatNumber(stockData.stockCurrentReturnPercent, 2) }}</span
+    >%
+  </div>
+  <div class="grid-item current-return">
+    &#8377;
+    <span [ngClass]="stockData.stockCurrentReturn > 0 ? 'green' : 'red'">{{
+      formatNumber(stockData.stockCurrentReturn, 2)
+    }}</span>
+  </div>
+</div>

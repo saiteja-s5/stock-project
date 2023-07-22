@@ -1,0 +1,25 @@
+<p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
+<div class="grid-container" *ngIf="!isLoading">
+  <div class="grid-item heading">Cash In</div>
+  <div class="grid-item icon">
+    <i class="pi pi-wallet" style="font-size: 2rem; color: steelblue"></i>
+  </div>
+  <div class="grid-item overall-cash">
+    &#8377;
+    <span [ngClass]="fundData.overallCashIn > 0 ? 'green' : 'red'">{{
+      formatNumber(fundData.overallCashIn)
+    }}</span>
+  </div>
+  <div class="grid-item credited">
+    &#8377;
+    <span [ngClass]="fundData.overallCreditedAmount > 0 ? 'green' : 'red'">
+      {{ formatNumber(fundData.overallCreditedAmount) }}</span
+    >
+  </div>
+  <div class="grid-item debited">
+    &#8377;
+    <span [ngClass]="fundData.overallDebitedAmount > 0 ? 'red' : 'green'">{{
+      formatNumber(fundData.overallDebitedAmount)
+    }}</span>
+  </div>
+</div>

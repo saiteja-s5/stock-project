@@ -27,6 +27,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -40,8 +41,6 @@ import { MutualModalButtonComponent } from './components/mutual-modal-button/mut
 import { DividendModalButtonComponent } from './components/dividend-modal-button/dividend-modal-button.component';
 import { FundModalButtonComponent } from './components/fund-modal-button/fund-modal-button.component';
 import { ProfitLossModalButtonComponent } from './components/profit-loss-modal-button/profit-loss-modal-button.component';
-import { SpinnerComponent } from './components/spinner/spinner.component';
-import { SuccessSnackbarComponent } from './components/success-snackbar/success-snackbar.component';
 import { StockAgGridComponent } from './components/stock-ag-grid/stock-ag-grid.component';
 import { MutualFundAgGridComponent } from './components/mutual-fund-ag-grid/mutual-fund-ag-grid.component';
 import { FundAgGridComponent } from './components/fund-ag-grid/fund-ag-grid.component';
@@ -50,6 +49,10 @@ import { ProfitLossAgGridComponent } from './components/profit-loss-ag-grid/prof
 import { OverallInvestmentCardComponent } from './components/overall-investment-card/overall-investment-card.component';
 import { StockDashboardComponent } from './components/stock-dashboard/stock-dashboard.component';
 import { TableUpdateFormComponent } from './components/table-update-form/table-update-form.component';
+import { StockCardComponent } from './components/stock-card/stock-card.component';
+import { FundCardComponent } from './components/fund-card/fund-card.component';
+import { DividendCardComponent } from './components/dividend-card/dividend-card.component';
+import { ProfitLossCardComponent } from './components/profit-loss-card/profit-loss-card.component';
 
 import { AppComponent } from './app.component';
 
@@ -70,8 +73,6 @@ import { DataTransferService } from './services/data-transfer.service';
     DividendModalButtonComponent,
     FundModalButtonComponent,
     ProfitLossModalButtonComponent,
-    SpinnerComponent,
-    SuccessSnackbarComponent,
     StockAgGridComponent,
     MutualFundAgGridComponent,
     FundAgGridComponent,
@@ -79,7 +80,11 @@ import { DataTransferService } from './services/data-transfer.service';
     ProfitLossAgGridComponent,
     OverallInvestmentCardComponent,
     StockDashboardComponent,
-    TableUpdateFormComponent
+    TableUpdateFormComponent,
+    StockCardComponent,
+    FundCardComponent,
+    DividendCardComponent,
+    ProfitLossCardComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +112,8 @@ import { DataTransferService } from './services/data-transfer.service';
     InputNumberModule,
     DynamicDialogModule,
     DropdownModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ],
   providers: [DataTransferService, DialogService, MessageService, ConfirmationService],
   bootstrap: [AppComponent]

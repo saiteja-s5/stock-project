@@ -1,0 +1,14 @@
+<p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
+<div class="grid-container" *ngIf="!isLoading">
+  <div class="grid-item heading">Dividend</div>
+  <div class="grid-item icon">
+    <i class="pi pi-gift" style="font-size: 2rem; color: steelblue"></i>
+  </div>
+  <div class="grid-item overall-dividend">
+    &#8377;
+    <span
+      [ngClass]="dividendData.dividendEarnedOverall > 0 ? 'green' : 'red'"
+      >{{ formatNumber(dividendData.dividendEarnedOverall) }}</span
+    >
+  </div>
+</div>

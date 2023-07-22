@@ -8,8 +8,6 @@ export const Utility = {
     soldStartDate: new Date("2021-01-18"),
     miscTableKey: 'MASTER-KEY',
     formFieldWidth: 400,
-    spinnerDiameter: 400,
-    spinnerStrokeWidth: 10,
     snackBarDuration: 1000,
     formatDate: function (date: Date) {
         let d = new Date(date),
@@ -22,4 +20,12 @@ export const Utility = {
             day = '0' + day;
         return [year, month, day].join('-');
     },
+    formatNumber: function (value: number, places?: number) {
+        let formattedNumber = value.toLocaleString();
+        let realAndDecimal = formattedNumber.split(".");
+        if (places) {
+            return realAndDecimal[0] + "." + realAndDecimal[1].substring(0, places);
+        }
+        return realAndDecimal[0];
+    }
 };

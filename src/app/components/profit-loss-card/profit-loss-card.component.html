@@ -1,0 +1,31 @@
+<p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
+<div class="grid-container" *ngIf="!isLoading">
+  <div class="grid-item heading">Profit/Loss</div>
+  <div class="grid-item icon">
+    <i class="pi pi-money-bill" style="font-size: 2rem; color: steelblue"></i>
+  </div>
+  <div class="grid-item pl-earned">
+    &#8377;
+    <span
+      [ngClass]="profitLossData.profitLossEarnedOverall > 0 ? 'green' : 'red'"
+      >{{ formatNumber(profitLossData.profitLossEarnedOverall) }}</span
+    >
+  </div>
+  <div class="grid-item overall-pl-percent">
+    <span
+      [ngClass]="profitLossData.overallProfitLossPercent > 0 ? 'green' : 'red'"
+    >
+      {{ formatNumber(profitLossData.overallProfitLossPercent, 2) }}</span
+    >%
+  </div>
+  <div class="grid-item average-pl-percent">
+    <span
+      [ngClass]="
+        profitLossData.averageReturnPerTransactionPercent > 0 ? 'green' : 'red'
+      "
+      >{{
+        formatNumber(profitLossData.averageReturnPerTransactionPercent, 2)
+      }}</span
+    >%
+  </div>
+</div>
