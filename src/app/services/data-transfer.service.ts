@@ -22,6 +22,7 @@ import { ProfitLossDashboard } from '../models/profit-loss-dashboard.model';
 import { DividendDashboard } from '../models/dividend-dashboard.model';
 import { FundDashboard } from '../models/fund-dashboard.model';
 import { MiscellaneousRecord } from '../models/miscellaneous-record.model';
+import { YahooQuote } from '../models/yahoo-quote.model';
 
 @Injectable({
   providedIn: 'root'
@@ -99,6 +100,14 @@ export class DataTransferService {
 
   updateMiscellaneousRecord(misc: MiscellaneousRecord): Observable<MiscellaneousRecord> {
     return this.http.put<MiscellaneousRecord>(this.apiUrl + 'misc-records', misc, { headers: this.headers })
+  }
+
+  getMutualFundQuote(symbol: string): Observable<YahooQuote> {
+    return this.http.get<YahooQuote>(this.apiUrl + 'markets/BSE/' + symbol, { headers: this.headers });
+  }
+
+  getCurrentStockHoldingsQuote(): Observable<YahooQuote[]> {
+    return this.http.get<YahooQuote[]>(this.apiUrl + 'markets/current-stock-holdings', { headers: this.headers });
   }
 
 }

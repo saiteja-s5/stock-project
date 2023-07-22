@@ -53,6 +53,7 @@ import { StockCardComponent } from './components/stock-card/stock-card.component
 import { FundCardComponent } from './components/fund-card/fund-card.component';
 import { DividendCardComponent } from './components/dividend-card/dividend-card.component';
 import { ProfitLossCardComponent } from './components/profit-loss-card/profit-loss-card.component';
+import { ScrollingBannerComponent } from './components/scrolling-banner/scrolling-banner.component';
 
 import { AppComponent } from './app.component';
 
@@ -84,7 +85,8 @@ import { DataTransferService } from './services/data-transfer.service';
     StockCardComponent,
     FundCardComponent,
     DividendCardComponent,
-    ProfitLossCardComponent
+    ProfitLossCardComponent,
+    ScrollingBannerComponent
   ],
   imports: [
     BrowserModule,
