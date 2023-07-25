@@ -15,7 +15,7 @@
     <span
       [ngClass]="profitLossData.overallProfitLossPercent > 0 ? 'green' : 'red'"
     >
-      {{ formatNumber(profitLossData.overallProfitLossPercent, 2) }}</span
+      {{ formatNumber(profitLossData.overallProfitLossPercent, 2, true) }}</span
     >%
   </div>
   <div class="grid-item average-pl-percent">
@@ -24,7 +24,7 @@
         profitLossData.averageReturnPerTransactionPercent > 0 ? 'green' : 'red'
       "
       >{{
-        formatNumber(profitLossData.averageReturnPerTransactionPercent, 2)
+        formatNumber(profitLossData.averageReturnPerTransactionPercent, 2, true)
       }}</span
     >%
   </div>

@@ -2,22 +2,22 @@
   <table>
     <tr>
       <td>Stock Investment Value</td>
-      <td>{{ stockData.stockInvestmentValue }}</td>
+      <td>{{ formatNumber(stockData.stockInvestmentValue) }}</td>
       <td>&#8377;</td>
     </tr>
     <tr>
       <td>Stock Current Value</td>
-      <td>{{ stockData.stockCurrentValue }}</td>
+      <td>{{ formatNumber(stockData.stockCurrentValue) }}</td>
       <td>&#8377;</td>
     </tr>
     <tr>
       <td>Stock Current Return</td>
-      <td>{{ stockData.stockCurrentReturn }}</td>
+      <td>{{ formatNumber(stockData.stockCurrentReturn) }}</td>
       <td>&#8377;</td>
     </tr>
     <tr>
       <td>Stock Current Return Percent</td>
-      <td>{{ stockData.stockCurrentReturnPercent }}</td>
+      <td>{{ formatNumber(stockData.stockCurrentReturnPercent, 2, true) }}</td>
       <td>%</td>
     </tr>
     <tr>

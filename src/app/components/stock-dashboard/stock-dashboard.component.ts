@@ -3,6 +3,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { StockDashboard } from 'src/app/models/stock-dashboard.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { TableUpdateFormComponent } from '../table-update-form/table-update-form.component';
+import { Utility } from 'src/app/utilities/utility';
 
 @Component({
   selector: 'app-stock-dashboard',
@@ -13,6 +14,7 @@ export class StockDashboardComponent {
 
   stockData!: StockDashboard;
   modal!: DynamicDialogRef;
+  formatNumber = Utility.formatNumber;
 
   constructor(private dataService: DataTransferService, public dialog: DialogService) {
     this.dataService.getStockDashboard().subscribe(stockData => {

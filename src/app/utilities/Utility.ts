@@ -20,12 +20,15 @@ export const Utility = {
             day = '0' + day;
         return [year, month, day].join('-');
     },
-    formatNumber: function (value: number, places?: number) {
-        let formattedNumber = value.toLocaleString();
-        let realAndDecimal = formattedNumber.split(".");
-        if (places) {
-            return realAndDecimal[0] + "." + realAndDecimal[1].substring(0, places);
+    formatNumber: function (value: number, places?: number, percentage?: boolean) {
+        if (value > 0 || value < 0) {
+            let formattedNumber = percentage ? value.toString() : value.toLocaleString();
+            if (formattedNumber.indexOf('.') != -1) {
+                let realAndDecimal = formattedNumber.split(".");
+                return places ? realAndDecimal[0] + "." + realAndDecimal[1].substring(0, places) : realAndDecimal[0];
+            }
+            return formattedNumber;
         }
-        return realAndDecimal[0];
+        return 0;
     }
 };

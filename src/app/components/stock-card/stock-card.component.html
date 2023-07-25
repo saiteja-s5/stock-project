@@ -12,13 +12,13 @@
   </div>
   <div class="grid-item current-return-percent">
     <span [ngClass]="stockData.stockCurrentReturn > 0 ? 'green' : 'red'">
-      {{ formatNumber(stockData.stockCurrentReturnPercent, 2) }}</span
+      {{ formatNumber(stockData.stockCurrentReturnPercent, 2, true) }}</span
     >%
   </div>
   <div class="grid-item current-return">
     &#8377;
     <span [ngClass]="stockData.stockCurrentReturn > 0 ? 'green' : 'red'">{{
-      formatNumber(stockData.stockCurrentReturn, 2)
+      formatNumber(stockData.stockCurrentReturn)
     }}</span>
   </div>
 </div>
