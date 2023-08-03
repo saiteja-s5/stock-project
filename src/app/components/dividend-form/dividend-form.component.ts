@@ -5,7 +5,7 @@ import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model'
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { AutoCompleteEvent } from 'src/app/models/auto-complete.model';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class DividendFormComponent {
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private messageService: MessageService, public modal: DynamicDialogRef) {
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private snackbarService: SnackbarService, public modal: DynamicDialogRef) {
   }
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class DividendFormComponent {
       },
       error: () => {
         this.isLoading = false;
-        this.openSnackBar('error', 'Company dropdown not loaded')
+        this.snackbarService.openSnackBar('error', 'Company dropdown not loaded')
       }
     });
     this.dividendForm = this.formBuilder.group({
@@ -53,19 +53,19 @@ export class DividendFormComponent {
         creditedDate: Utility.formatDate(this.dividendForm.value.creditedDate)
       });
       this.dataTransferService.addDividend(this.dividendForm.value).subscribe({
-        next: response => {
+        next: () => {
           this.isLoading = false;
-          this.openSnackBar('success', 'Dividend added sucessfully');
+          this.snackbarService.openSnackBar('success', 'Dividend added sucessfully');
           this.modal.close();
         },
         error: () => {
           this.isLoading = false;
-          this.openSnackBar('error', 'Dividend not added');
+          this.snackbarService.openSnackBar('error', 'Dividend not added');
           this.modal.close();
         }
       });
     } else {
-      this.openSnackBar('warn', 'Enter all the fields correctly');
+      this.snackbarService.openSnackBar('warn', 'Enter all the fields correctly');
     }
   }
 
@@ -83,14 +83,7 @@ export class DividendFormComponent {
 
   closeModal() {
     this.modal.close();
-    this.openSnackBar('warn', 'Last transaction cancelled');
-  }
-
-  openSnackBar(severity: string, message: string) {
-    this.messageService.clear();
-    this.messageService.add({
-      key: 'global', severity: severity, detail: message
-    });
+    this.snackbarService.openSnackBar('warn', 'Last transaction cancelled');
   }
 
 }

@@ -5,7 +5,7 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Utility } from 'src/app/utilities/utility';
 import { AutoCompleteEvent } from 'src/app/models/auto-complete.model';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-stock-form',
@@ -22,7 +22,7 @@ export class StockFormComponent {
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private messageService: MessageService, public modal: DynamicDialogRef) {
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private snackbarService: SnackbarService, public modal: DynamicDialogRef) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class StockFormComponent {
       },
       error: () => {
         this.isLoading = false;
-        this.openSnackBar('error', 'Stock dropdown not loaded')
+        this.snackbarService.openSnackBar('error', 'Stock dropdown not loaded')
       }
     });
     this.stockForm = this.formBuilder.group({
@@ -53,19 +53,19 @@ export class StockFormComponent {
         investmentDate: Utility.formatDate(this.stockForm.value.investmentDate)
       });
       this.dataTransferService.addStock(this.stockForm.value).subscribe({
-        next: response => {
+        next: () => {
           this.isLoading = false;
-          this.openSnackBar('success', 'Stock added sucessfully');
+          this.snackbarService.openSnackBar('success', 'Stock added sucessfully');
           this.modal.close();
         },
         error: () => {
           this.isLoading = false;
-          this.openSnackBar('error', 'Stock not added');
+          this.snackbarService.openSnackBar('error', 'Stock not added');
           this.modal.close();
         }
       });
     } else {
-      this.openSnackBar('warn', 'Enter all the fields correctly');
+      this.snackbarService.openSnackBar('warn', 'Enter all the fields correctly');
     }
   }
 
@@ -83,14 +83,7 @@ export class StockFormComponent {
 
   closeModal() {
     this.modal.close();
-    this.openSnackBar('warn', 'Last transaction cancelled');
-  }
-
-  openSnackBar(severity: string, message: string) {
-    this.messageService.clear();
-    this.messageService.add({
-      key: 'global', severity: severity, detail: message
-    });
+    this.snackbarService.openSnackBar('warn', 'Last transaction cancelled');
   }
 
 }

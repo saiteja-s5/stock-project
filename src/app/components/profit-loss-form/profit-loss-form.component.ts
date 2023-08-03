@@ -4,8 +4,8 @@ import { Utility } from 'src/app/utilities/utility';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { CompanyNameDropdown } from 'src/app/models/company-name-dropdown.model';
 import { AutoCompleteEvent } from 'src/app/models/auto-complete.model';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-profit-loss-form',
@@ -22,7 +22,7 @@ export class ProfitLossFormComponent {
   formFieldWidth = Utility.formFieldWidth;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private messageService: MessageService, public modal: DynamicDialogRef) {
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private snackbarService: SnackbarService, public modal: DynamicDialogRef) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class ProfitLossFormComponent {
       },
       error: () => {
         this.isLoading = false;
-        this.openSnackBar('error', 'Stock dropdown not loaded')
+        this.snackbarService.openSnackBar('error', 'Stock dropdown not loaded')
       }
     });
     this.profitLossForm = this.formBuilder.group({
@@ -60,19 +60,19 @@ export class ProfitLossFormComponent {
       (this.profitLossForm.controls['bought'] as FormGroup).controls['boughtDate'].setValue(Utility.formatDate(this.profitLossForm.value.bought.boughtDate));
       (this.profitLossForm.controls['sold'] as FormGroup).controls['soldDate'].setValue(Utility.formatDate(this.profitLossForm.value.sold.soldDate));
       this.dataTransferService.addProfitLoss(this.profitLossForm.value).subscribe({
-        next: response => {
+        next: () => {
           this.isLoading = false;
-          this.openSnackBar('success', 'Profit/Loss added sucessfully');
+          this.snackbarService.openSnackBar('success', 'Profit/Loss added sucessfully');
           this.modal.close();
         },
         error: () => {
           this.isLoading = false;
-          this.openSnackBar('error', 'Profit/Loss not added');
+          this.snackbarService.openSnackBar('error', 'Profit/Loss not added');
           this.modal.close();
         }
       });
     } else {
-      this.openSnackBar('warn', 'Enter all the fields correctly');
+      this.snackbarService.openSnackBar('warn', 'Enter all the fields correctly');
     }
   }
 
@@ -90,14 +90,7 @@ export class ProfitLossFormComponent {
 
   closeModal() {
     this.modal.close();
-    this.openSnackBar('warn', 'Last transaction cancelled');
-  }
-
-  openSnackBar(severity: string, message: string) {
-    this.messageService.clear();
-    this.messageService.add({
-      key: 'global', severity: severity, detail: message
-    });
+    this.snackbarService.openSnackBar('warn', 'Last transaction cancelled');
   }
 
 }

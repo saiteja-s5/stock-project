@@ -34,8 +34,8 @@ export class DataTransferService {
   private apiUrl = environment.API_URL;
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  addStock(stock: Stock): Observable<Stock> {
-    return this.http.post<Stock>(this.apiUrl + 'stocks', stock, { headers: this.headers });
+  addStock(stock: Stock): Observable<number> {
+    return this.http.post<number>(this.apiUrl + 'stocks', stock, { headers: this.headers });
   }
 
   addMutualFund(mutualFund: MutualFund): Observable<MutualFund> {
@@ -108,6 +108,10 @@ export class DataTransferService {
 
   getCurrentStockHoldingsQuote(): Observable<YahooQuote[]> {
     return this.http.get<YahooQuote[]>(this.apiUrl + 'markets/current-stock-holdings', { headers: this.headers });
+  }
+
+  getAllRecords(): Observable<any> {
+    return this.http.get(this.apiUrl + 'reports/all', { observe: 'response', responseType: 'blob' });
   }
 
 }

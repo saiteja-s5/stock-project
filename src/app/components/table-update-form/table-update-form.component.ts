@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MiscellaneousRecord } from 'src/app/models/miscellaneous-record.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Utility } from 'src/app/utilities/utility';
 
 @Component({
@@ -27,7 +27,7 @@ export class TableUpdateFormComponent {
   today = Utility.today;
   isLoading = false;
 
-  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private messageService: MessageService, public modal: DynamicDialogRef,
+  constructor(private formBuilder: FormBuilder, private dataTransferService: DataTransferService, private snackbarService: SnackbarService, public modal: DynamicDialogRef,
     public config: DynamicDialogConfig) {
     this.isCashUpdate = this.config.data.isCashUpdate;
     this.isStockUpdate = this.config.data.isStockUpdate;
@@ -62,7 +62,7 @@ export class TableUpdateFormComponent {
       },
       error: () => {
         this.isLoading = false;
-        this.openSnackBar('error', 'Last update date not fetched')
+        this.snackbarService.openSnackBar('error', 'Last update date not fetched')
       }
     });
     this.tableForm = this.formBuilder.group({
@@ -79,7 +79,7 @@ export class TableUpdateFormComponent {
 
   onFormSubmit() {
     if (this.isCashUpdate && this.tableForm.value.cashAvailableForInvesting <= 0) {
-      this.openSnackBar('warn', 'Cash Available entered is invalid');
+      this.snackbarService.openSnackBar('warn', 'Cash Available entered is invalid');
     } else {
       this.isLoading = true;
       if (this.isCashUpdate) {
@@ -127,14 +127,14 @@ export class TableUpdateFormComponent {
         });
       }
       this.dataTransferService.updateMiscellaneousRecord(this.tableForm.value).subscribe({
-        next: response => {
+        next: () => {
           this.isLoading = false;
-          this.openSnackBar('success', 'Table updated sucessfully');
+          this.snackbarService.openSnackBar('success', 'Table updated sucessfully');
           this.modal.close();
         },
         error: () => {
           this.isLoading = false;
-          this.openSnackBar('error', 'Table not updated');
+          this.snackbarService.openSnackBar('error', 'Table not updated');
           this.modal.close();
         }
       });
@@ -143,14 +143,7 @@ export class TableUpdateFormComponent {
 
   closeModal() {
     this.modal.close();
-    this.openSnackBar('warn', 'Table update cancelled');
-  }
-
-  openSnackBar(severity: string, message: string) {
-    this.messageService.clear();
-    this.messageService.add({
-      key: 'global', severity: severity, detail: message
-    });
+    this.snackbarService.openSnackBar('warn', 'Table update cancelled');
   }
 
 }
